@@ -1,0 +1,11 @@
+{
+    "files.exclude": {
+        "dist":true,
+        "generated":true,
+        "node_modules":true,
+        "eslint.config.mjs":true,
+        "nest-cli.json":true,
+        "package-lock.json":true,
+        "tsconfig.build.json":true
+    }
+}
