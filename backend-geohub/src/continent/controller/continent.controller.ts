@@ -37,8 +37,7 @@ export class ContinentController {
     @Param('id', ParseIntPipe) id: number,
     @Body() continent: UpdateContinentDto,
   ): Promise<Continent> {
-    continent.id = id;
-    return this.continentService.update(continent);
+    return this.continentService.update(id, continent);
   }
 
   @Delete(':id')
