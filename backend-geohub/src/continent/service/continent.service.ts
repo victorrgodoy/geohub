@@ -21,13 +21,14 @@ export class ContinentService {
     return this.continentRepository.listAll();
   }
 
-  public async update(continent: UpdateContinentDto): Promise<Continent> {
+  public async update(
+    id: number,
+    continent: UpdateContinentDto,
+  ): Promise<Continent> {
     try {
-      return await this.continentRepository.update(continent);
+      return await this.continentRepository.update(id, continent);
     } catch {
-      throw new NotFoundException(
-        `Continent with id ${continent.id} not found`,
-      );
+      throw new NotFoundException(`Continent with id ${id} not found`);
     }
   }
 

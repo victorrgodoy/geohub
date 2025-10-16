@@ -1,17 +1,8 @@
 import { Module } from '@nestjs/common';
-import { PrismaService } from './database/prisma.service';
-import { ContinentRepository } from './continent/repositories/continent-repository';
-import { PrismaContinentRepository } from './continent/prisma/prisma-continent-repository';
-import { ContinentController } from './continent/controller/continent.controller';
-import { ContinentService } from './continent/service/continent.service';
+import { PrismaModule } from './database/prisma.module';
+import { ContinentModule } from './continent/continent.module';
+import { CountryModule } from './country/country.module';
+import { CityModule } from './city/city.module';
 
-@Module({
-  imports: [],
-  controllers: [ContinentController],
-  providers: [
-    PrismaService,
-    ContinentService,
-    { provide: ContinentRepository, useClass: PrismaContinentRepository },
-  ],
-})
+@Module({ imports: [PrismaModule, ContinentModule, CountryModule, CityModule] })
 export class AppModule {}

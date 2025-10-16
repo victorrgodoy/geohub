@@ -8,7 +8,7 @@ export class CreateCountryDto {
   @IsInt()
   @IsNotEmpty()
   @IsPositive()
-  @Min(1) 
+  @Min(1)
   population: number;
 
   @IsString()
@@ -21,5 +21,5 @@ export class CreateCountryDto {
 
   @IsInt()
   @IsNotEmpty()
-  continentId: number; 
+  continentId: number;
 }

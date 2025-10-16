@@ -32,10 +32,10 @@ export class PrismaContinentRepository implements ContinentRepository {
     });
   }
 
-  async update(dto: UpdateContinentDto): Promise<Continent> {
+  async update(id: number, dto: UpdateContinentDto): Promise<Continent> {
     return await this.prisma.continent.update({
       where: {
-        con_id: dto.id,
+        con_id: id,
       },
       data: {
         con_name: dto.name,
