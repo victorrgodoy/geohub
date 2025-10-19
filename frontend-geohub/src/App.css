@@ -1,28 +1,56 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:ital,wght@0,100..900;1,100..900&display=swap');
-@import 'tailwindcss';
+
+/* Reset global */
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 
 :root {
-   --color--background: #ffffff;
-   --color--primary: #254827;
-   --color--text: #0c0c0c;
-   --color--text--2: #ffffff;
-   --color--text--3: #767676;
-   --color--button--save: #834eff;
-   --color--button--filter: #f0f3f5;
-   --color--filter: #f3f5f7;
-   --color--sidebar: #f3f5f7;
+   --color-background: #ffffff;
+   --color-primary: #254827;
+   --color-text: #0c0c0c;
+   --color-text-2: #ffffff;
+   --color-text-3: #767676;
+   --color-button-save: #834eff;
+   --color-button-filter: #f3f5f7;  
+   --color-filter: #E3EFF6;
+   --color-sidebar: #f3f5f7;
 
-   --font--primary: 'Roboto';
+   --font-primary: 'Roboto', sans-serif;
 }
 
-body {
-   text-rendering: optimizeLegibility;
-   -webkit-font-smoothing: antialiased;
-   -moz-osx-font-smoothing: grayscale;
-   font-family: var(--font--primary), Avenir, Helvetica, sans-serif;
+html, body, #root {
+  font-family: var(--font-primary);
+  background: var(--color-background);
+  color: var(--color-text);
+  height: 100%;
 }
 
-.ant-table-thead > tr > th {
-   background-color: var(--color--primary) !important;
-   color: var(--color--text--2) !important;
+.container {
+  height: 100%;
+  max-width: 1800px;
+  margin: 0 auto;
+  padding: 0 20px;
 }
+
+
+/* 12px
+0.75rem
+14px
+0.875rem
+16px
+1rem
+18px
+1.125rem
+20px
+1.25rem
+24px
+1.5rem
+32px
+2rem
+36px
+2.25rem */

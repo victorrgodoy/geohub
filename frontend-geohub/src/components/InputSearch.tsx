@@ -7,7 +7,11 @@ type InputSearchProps = {
 }
 
 const InputSearch: React.FC<InputSearchProps> = ({ title }) => {
-   return <Input placeholder={title} prefix={<SearchOutlined />} />
+   return <Input 
+      placeholder={title} 
+      prefix={<SearchOutlined />} 
+      style={{ width: '10rem', height: '2rem' }}
+      />
 }
 
-export default InputSearch
+export default InputSearch;
