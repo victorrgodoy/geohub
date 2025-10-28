@@ -9,6 +9,21 @@ import { NotFoundException } from '@nestjs/common';
 export class CountryService {
   constructor(private readonly countryRepository: CountryRepository) {}
 
+  async listTop5ByPopulation(): Promise<Country[]> {
+    return await this.countryRepository.listTop5ByPopulation();
+  }
+
+  async getTotalCountry(): Promise<{ total: number; updatedAt: Date | null }> {
+    return await this.countryRepository.getTotalCountry();
+  }
+
+  async getTotalPopulation(): Promise<{
+    total: number;
+    updatedAt: Date | null;
+  }> {
+    return await this.countryRepository.getTotalPopulation();
+  }
+
   public async findByContinent(continentName: string): Promise<Country[]> {
     const countries =
       await this.countryRepository.findByContinent(continentName);

@@ -1,6 +1,4 @@
 import { useContext } from "react";
-
-//context
 import { ThemeContext } from "../context/theme/themeContext";
 
 function ThemeController() {
@@ -10,8 +8,9 @@ function ThemeController() {
         <input 
             type="checkbox" 
             className="
-                toggle toggle-sm theme-controller 
-                border-(--color-text) text-(--color-text)" 
+                toggle toggle-sm 
+                bg-(--color-background)
+                border-gray-400 text-(--color-text)" 
             checked={theme === "dark"}
             onChange={toggleTheme}
             />

@@ -9,6 +9,25 @@ import { Injectable } from '@nestjs/common';
 export class PrismaCityRepository implements CityRepository {
   constructor(private prisma: PrismaService) {}
 
+  async listTop5ByPopulation(): Promise<City[]> {
+    return await this.prisma.city.findMany({
+      orderBy: { cit_population: 'desc' },
+      take: 5,
+    });
+  }
+
+  async getTotalCity(): Promise<{ total: number; updatedAt: Date | null }> {
+    const data = await this.prisma.city.aggregate({
+      _count: { cit_id: true },
+      _max: { updatedAt: true },
+    });
+
+    return {
+      total: data._count.cit_id,
+      updatedAt: data._max.updatedAt,
+    };
+  }
+
   async findByCountry(countryName: string): Promise<City[]> {
     return await this.prisma.city.findMany({
       where: {

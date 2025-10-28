@@ -9,9 +9,11 @@ import {
   Param,
   Delete,
   Query,
+  ParseBoolPipe,
 } from '@nestjs/common';
 import { CityService } from '../service/city.service';
 import { CreateCityDto } from '../dtos/create-city-dto';
+import { ResponseCityDto } from '../dtos/response-city-dto';
 import { City } from 'generated/prisma';
 import { UpdateCityDto } from '../dtos/update-city-dto';
 import { ParseIntPipe } from '@nestjs/common';
@@ -26,28 +28,36 @@ export class CityController {
     return this.cityService.create(city);
   }
 
+  @Get('total-city')
+  @HttpCode(HttpStatus.OK)
+  async getTotalCity(): Promise<{ total: number; updatedAt: Date | null }> {
+    return await this.cityService.getTotalCity();
+  }
+
   @Get()
   @HttpCode(HttpStatus.OK)
   async listAll(
     @Query('countryName') countryName?: string,
     @Query('continentName') continentName?: string,
-  ): Promise<City[]> {
+    @Query('top5', ParseBoolPipe) top5?: boolean,
+  ): Promise<ResponseCityDto[]> {
+    let cities: City[];
+
     if (countryName && continentName) {
-      return this.cityService.findByCountryAndContinent(
+      cities = await this.cityService.findByCountryAndContinent(
         countryName,
         continentName,
       );
+    } else if (countryName) {
+      cities = await this.cityService.findByCountry(countryName);
+    } else if (continentName) {
+      cities = await this.cityService.findByContinent(continentName);
+    } else if (top5) {
+      cities = await this.cityService.listTop5ByPopulation();
+    } else {
+      cities = await this.cityService.listAll();
     }
-
-    if (countryName) {
-      return this.cityService.findByCountry(countryName);
-    }
-
-    if (continentName) {
-      return this.cityService.findByContinent(continentName);
-    }
-
-    return this.cityService.listAll();
+    return cities.map((c) => new ResponseCityDto(c));
   }
 
   @Put(':id')

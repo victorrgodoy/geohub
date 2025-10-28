@@ -9,10 +9,13 @@ import {
   Param,
   Delete,
   Query,
+  ParseBoolPipe,
+  Res,
 } from '@nestjs/common';
 import { CountryService } from '../service/country.service';
 import { CreateCountryDto } from '../dtos/create-country-dto';
 import { UpdateCountryDto } from '../dtos/update-country-dto';
+import { ResponseCountryDto } from '../dtos/response-country-dto';
 import { Country } from 'generated/prisma';
 import { ParseIntPipe } from '@nestjs/common';
 
@@ -26,16 +29,42 @@ export class CountryController {
     return this.countryService.create(country);
   }
 
+  @Get('total-country')
+  @HttpCode(HttpStatus.OK)
+  async getTotalCountries(): Promise<{
+    total: number;
+    updatedAt: Date | null;
+  }> {
+    return await this.countryService.getTotalCountry();
+  }
+
+  @Get('total-population')
+  @HttpCode(HttpStatus.OK)
+  async getTotalPopulation(): Promise<{
+    total: number;
+    updatedAt: Date | null;
+  }> {
+    return await this.countryService.getTotalPopulation();
+  }
+
   @Get()
   @HttpCode(HttpStatus.OK)
   async list(
     @Query('continentName') continentName?: string,
-  ): Promise<Country[]> {
+    @Query('top5', ParseBoolPipe) top5?: boolean,
+  ): Promise<ResponseCountryDto[]> {
+    let countries: Country[];
+
     if (continentName) {
-      return await this.countryService.findByContinent(continentName);
+      countries = await this.countryService.findByContinent(continentName);
+    } else if (top5) {
+      countries = await this.countryService.listTop5ByPopulation();
+    } else {
+      countries = await this.countryService.listAll();
     }
-    return await this.countryService.listAll();
+    return countries.map((c) => new ResponseCountryDto(c));
   }
+
   @Put(':id')
   @HttpCode(HttpStatus.OK)
   async update(

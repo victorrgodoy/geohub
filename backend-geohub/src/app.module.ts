@@ -3,6 +3,17 @@ import { PrismaModule } from './database/prisma.module';
 import { ContinentModule } from './continent/continent.module';
 import { CountryModule } from './country/country.module';
 import { CityModule } from './city/city.module';
+import { ConfigModule } from '@nestjs/config';
 
-@Module({ imports: [PrismaModule, ContinentModule, CountryModule, CityModule] })
+@Module({
+  imports: [
+    ConfigModule.forRoot({
+      isGlobal: true,
+    }),
+    PrismaModule,
+    ContinentModule,
+    CountryModule,
+    CityModule,
+  ],
+})
 export class AppModule {}

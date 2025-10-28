@@ -10,4 +10,13 @@ export abstract class CountryRepository {
   abstract delete(id: number): Promise<void>;
 
   abstract findByContinent(continentName: string): Promise<Country[]>;
+  abstract getTotalPopulation(): Promise<{
+    total: number;
+    updatedAt: Date | null;
+  }>;
+  abstract getTotalCountry(): Promise<{
+    total: number;
+    updatedAt: Date | null;
+  }>;
+  abstract listTop5ByPopulation(): Promise<Country[]>;
 }

@@ -15,4 +15,7 @@ export abstract class CityRepository {
     countryName: string,
     continentName: string,
   ): Promise<City[]>;
+
+  abstract getTotalCity(): Promise<{ total: number; updatedAt: Date | null }>;
+  abstract listTop5ByPopulation(): Promise<City[]>;
 }

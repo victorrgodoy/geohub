@@ -4,10 +4,19 @@ import { CreateCityDto } from '../dtos/create-city-dto';
 import { UpdateCityDto } from '../dtos/update-city-dto';
 import { CityRepository } from '../repositories/city-repository';
 import { NotFoundException } from '@nestjs/common';
+import { retry } from 'rxjs';
 
 @Injectable()
 export class CityService {
   constructor(private readonly cityRepository: CityRepository) {}
+
+  async listTop5ByPopulation(): Promise<City[]> {
+    return await this.cityRepository.listTop5ByPopulation();
+  }
+
+  async getTotalCity(): Promise<{ total: number; updatedAt: Date | null }> {
+    return await this.cityRepository.getTotalCity();
+  }
 
   public async findByCountry(countryName: string): Promise<City[]> {
     try {

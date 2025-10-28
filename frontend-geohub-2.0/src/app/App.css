@@ -1,0 +1,30 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans:ital,wght@0,100..900;1,100..900&display=swap');
+@import "tailwindcss";
+@plugin "daisyui";
+
+.dark {
+  --color-background: #040D12;
+  --color-primary: #93B1A6;
+  --color-hover: #93B1A6;
+  --color-text: #fafafae5;
+  --color-text-subtitle: #aaaaaa;
+  --color-border: oklch(46.532% 0.04301 261.126 / 0.527);
+  --font-primary: 'Noto Sans', sans-serif;
+}
+
+.light {
+  --color-background: #ffffff;
+  --color-primary: #5C8374;
+  --color-hover:#5C8374;
+  --color-text: #000000;
+  --color-text-subtitle: #808080;
+  --color-border: #e2e1e1;
+  --font-primary: 'Noto Sans', sans-serif;
+}
+
+/* ===== BASE ===== */
+body {
+  background-color: var(--color-background);
+  font-family: var(--font-primary);
+  color: var(--color-text);
+}
