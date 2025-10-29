@@ -5,17 +5,20 @@ type Column = {
 
 type TableProps<T> = {
   columns: Column[];
-  data: T[];
+  data: (T & { flag?: string })[];
 };
 
 function Table<T extends object>({ columns, data }: TableProps<T>) {
   return (
-    <div className="overflow-x-auto pb-6 text-xs lg:text-sm">
+    <div className="overflow-x-auto pb-6 text-xs lg:text-sm rounded-sm">
       <table className="table">
         <thead>
           <tr>
             {columns.map((col) => (
-              <th key={col.key} className="px-6 font-normal text-(--color-text-subtitle)">
+              <th
+                key={col.key}
+                className="px-6 font-normal text-(--color-text-subtitle) bg-(--color-text)/5"
+              >
                 {col.label}
               </th>
             ))}
@@ -23,14 +26,24 @@ function Table<T extends object>({ columns, data }: TableProps<T>) {
         </thead>
         <tbody>
           {data.map((row, rowIndex) => (
-            <tr key={rowIndex} className="border-b border-(--color-border) last:border-0 ">
+            <tr
+              key={rowIndex}
+              className="border-b border-(--color-border) last:border-0"
+            >
               {columns.map((col, colIndex) => (
-               <td key={colIndex} 
-                className={`px-6 ${col.key === "name" && (row as any).flag ? "flex gap-2 items-center" : ""}`}>
-                  {col.key === "name" && (row as any).flag && (
+                <td
+                  key={colIndex}
+                  className={`px-6 ${
+                    col.key === "name" && row.flag
+                      ? "flex gap-2 items-center"
+                      : ""
+                  }`}
+                >
+                  {/* Se houver flag, exibe a imagem */}
+                  {col.key === "name" && row.flag && (
                     <img
-                      src={(row as any).flag}
-                      alt={`${row[col.key as keyof T]} flag`}
+                      src={row.flag}
+                      alt={`${String(row[col.key as keyof T])} flag`}
                       className="w-8 rounded-sm"
                     />
                   )}

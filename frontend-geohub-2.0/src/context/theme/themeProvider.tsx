@@ -5,22 +5,22 @@ type Props = {
   children: ReactNode;
 };
 
-export function ThemeProvider({children}: Props){
-  const [theme, setTheme] = useState<"dark" | "light">("dark")
+export function ThemeProvider({ children }: Props) {
+  const [theme, setTheme] = useState<"dark" | "light">("dark");
 
   useEffect(() => {
     const body = document.body;
-    body.classList.remove("dark", "light")
-    body.classList.add(theme)
-  }, [theme])
+    body.classList.remove("dark", "light");
+    body.classList.add(theme);
+  }, [theme]);
 
   const toggleTheme = () => {
-    setTheme(prev => (prev === "dark" ? "light" : "dark"));
+    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
   };
 
-  return(
-    <ThemeContext.Provider value={{theme, toggleTheme}}>
+  return (
+    <ThemeContext.Provider value={{ theme, toggleTheme }}>
       {children}
     </ThemeContext.Provider>
-  )
-} 
+  );
+}

@@ -17,14 +17,16 @@ export class PrismaCityRepository implements CityRepository {
   }
 
   async getTotalCity(): Promise<{ total: number; updatedAt: Date | null }> {
-    const data = await this.prisma.city.aggregate({
-      _count: { cit_id: true },
-      _max: { updatedAt: true },
+    const result = await this.prisma.city.aggregate({
+      _count: true,
+      _max: {
+        updatedAt: true,
+      },
     });
 
     return {
-      total: data._count.cit_id,
-      updatedAt: data._max.updatedAt,
+      total: result._count,
+      updatedAt: result._max.updatedAt || null,
     };
   }
 

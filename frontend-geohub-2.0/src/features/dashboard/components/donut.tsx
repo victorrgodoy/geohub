@@ -1,16 +1,22 @@
 import { Doughnut } from "react-chartjs-2";
-import { Chart as ChartJS, ArcElement, Tooltip, Legend, layouts } from "chart.js";
+import {
+  Chart as ChartJS,
+  ArcElement,
+  Tooltip,
+  Legend,
+  layouts,
+} from "chart.js";
 
 ChartJS.register(ArcElement, Tooltip, Legend);
 
 const fullNames = [
-  "Africa", 
-  "Asia", 
-  "Europe", 
-  "North America", 
-  "South America", 
-  "Oceania", 
-  "Antarctica"
+  "Africa",
+  "Asia",
+  "Europe",
+  "North America",
+  "South America",
+  "Oceania",
+  "Antarctica",
 ];
 
 const data = {
@@ -20,11 +26,11 @@ const data = {
       data: [
         1410000000, // Africa
         4660000000, // Asia
-        748000000,  // Europe
-        600000000,  // North America
-        430000000,  // South America
-        43000000,   // Oceania
-        1000        // Antarctica
+        748000000, // Europe
+        600000000, // North America
+        430000000, // South America
+        43000000, // Oceania
+        1000, // Antarctica
       ],
       backgroundColor: [
         "#f59e0b", // Africa
@@ -33,7 +39,7 @@ const data = {
         "#8b5cf6", // North America
         "#ef4444", // South America
         "#f472b6", // Oceania
-        "#06b6d4"  // Antarctica
+        "#06b6d4", // Antarctica
       ],
       hoverOffset: 8,
       borderWidth: 0,
@@ -44,7 +50,7 @@ const data = {
 export default function Donut() {
   const options = {
     responsive: true,
-    maintainAspectRatio: false, 
+    maintainAspectRatio: false,
     animation: { duration: 1000, easing: "easeOutBounce" },
     plugins: {
       legend: {
@@ -67,8 +73,8 @@ export default function Donut() {
               value >= 1_000_000_000
                 ? (value / 1_000_000_000).toFixed(2) + "B"
                 : value >= 1_000_000
-                ? (value / 1_000_000).toFixed(2) + "M"
-                : value;
+                  ? (value / 1_000_000).toFixed(2) + "M"
+                  : value;
             return `${fullName}: ${formatted}`;
           },
         },

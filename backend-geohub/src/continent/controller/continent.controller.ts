@@ -13,6 +13,7 @@ import { ContinentService } from '../service/continent.service';
 import { CreateContinentDto } from '../dtos/create-continent-dto';
 import { Continent } from 'generated/prisma';
 import { UpdateContinentDto } from '../dtos/update-continent-dto';
+import { ResponseContinentDto } from '../dtos/response-continent-dto';
 import { ParseIntPipe } from '@nestjs/common';
 
 @Controller('/continent')
@@ -27,8 +28,9 @@ export class ContinentController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  async listAll(): Promise<Continent[]> {
-    return this.continentService.listAll();
+  async listAll(): Promise<ResponseContinentDto[]> {
+    const continents = await this.continentService.listAll();
+    return continents.map((c) => new ResponseContinentDto(c));
   }
 
   @Put(':id')
