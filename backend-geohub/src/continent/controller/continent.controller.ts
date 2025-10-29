@@ -22,8 +22,9 @@ export class ContinentController {
 
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
-  async create(@Body() continent: CreateContinentDto): Promise<Continent> {
-    return this.continentService.create(continent);
+  async create(@Body() continent: CreateContinentDto): Promise<ResponseContinentDto> {
+    const created = await this.continentService.create(continent);
+    return new ResponseContinentDto(created)
   }
 
   @Get()
@@ -38,8 +39,10 @@ export class ContinentController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() continent: UpdateContinentDto,
-  ): Promise<Continent> {
-    return this.continentService.update(id, continent);
+  ): Promise<ResponseContinentDto> {
+    const edited = await this.continentService.update(id, continent);
+    return new ResponseContinentDto(edited)
+
   }
 
   @Delete(':id')

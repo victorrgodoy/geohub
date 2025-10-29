@@ -1,14 +1,15 @@
-type Column = {
+type Column<T = any> = {
   key: string;
   label: string;
+  render?: (row:T) => React.ReactNode;
 };
 
 type TableProps<T> = {
-  columns: Column[];
+  columns: Column<T>[];
   data: (T & { flag?: string })[];
 };
 
-function Table<T extends object>({ columns, data }: TableProps<T>) {
+export const TableView = <T extends object>({ columns, data }: TableProps<T>) => {
   return (
     <div className="overflow-x-auto pb-6 text-xs lg:text-sm rounded-sm">
       <table className="table">
@@ -17,7 +18,7 @@ function Table<T extends object>({ columns, data }: TableProps<T>) {
             {columns.map((col) => (
               <th
                 key={col.key}
-                className="px-6 font-normal text-(--color-text-subtitle) bg-(--color-text)/5"
+                className="px-6 font-normal text-(--color-text)/70 bg-(--color-text)/10 w-1/2"
               >
                 {col.label}
               </th>
@@ -28,7 +29,7 @@ function Table<T extends object>({ columns, data }: TableProps<T>) {
           {data.map((row, rowIndex) => (
             <tr
               key={rowIndex}
-              className="border-b border-(--color-border) last:border-0"
+              className="border-b border-(--color-text)/10 last:border-0"
             >
               {columns.map((col, colIndex) => (
                 <td
@@ -39,15 +40,18 @@ function Table<T extends object>({ columns, data }: TableProps<T>) {
                       : ""
                   }`}
                 >
-                  {/* Se houver flag, exibe a imagem */}
-                  {col.key === "name" && row.flag && (
-                    <img
-                      src={row.flag}
-                      alt={`${String(row[col.key as keyof T])} flag`}
-                      className="w-8 rounded-sm"
-                    />
-                  )}
-                  {String(row[col.key as keyof T])}
+                  {col.render ? col.render(row) : col.key === "name" && row.flag ? 
+                    ( 
+                    <>
+                      <img
+                        src={row.flag}
+                        alt={`${String(row[col.key as keyof T])} flag`}
+                        className="w-8 rounded-sm"
+                      />
+                      {String(row[col.key as keyof T]) }
+                    </>
+                    )
+                  : String(row[col.key as keyof T])} 
                 </td>
               ))}
             </tr>
@@ -58,4 +62,3 @@ function Table<T extends object>({ columns, data }: TableProps<T>) {
   );
 }
 
-export default Table;

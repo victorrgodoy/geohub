@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
-import { listAllContinent, createContinent, type CreateContinent, type ContinentResponse } from "../api/continent";
+import {
+  listAllContinent,
+  createContinent,
+  deleteContinent,
+  updateContinent,
+  type Continent,
+} from "../api/continent";
 
 export const useContinent = () => {
-  const [continents, setContinents] = useState<ContinentResponse[]>([]);
+  const [continents, setContinents] = useState<Continent[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
@@ -14,9 +20,20 @@ export const useContinent = () => {
     fetchData();
   }, []);
 
-  const addContinent = async (continent: CreateContinent) => {
-    await createContinent(continent)
+  const handleCreate = async (continent: Continent) => {
+    const created = await createContinent(continent);
+    setContinents(prev => [...prev, created])
   }
 
-  return { continents, loading, addContinent };
+  const handleDelete = async (id: number) => {
+    await deleteContinent(id);          
+    setContinents(prev => prev.filter(c => c.id !== id)); 
+  }
+
+  const handleEdit = async (id: number, continent: Continent) => {
+    const edited = await updateContinent(id, continent);
+    setContinents(prev => prev.map((c) => c.id === edited.id ? edited : c))
+  }
+
+  return { continents, loading, handleCreate, handleDelete, handleEdit };
 };

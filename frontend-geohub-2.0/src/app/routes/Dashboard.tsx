@@ -1,6 +1,6 @@
 import Card from "../../features/dashboard/components/card";
 import Donut from "../../features/dashboard/components/donut";
-import Table from "../../components/table";
+import { TableView } from "../../components/tableView";
 
 import { useDashboard } from "../../features/dashboard/hooks/useDashboard";
 import { formatDate } from "../../lib/formatDate";
@@ -49,7 +49,7 @@ function Dashboard() {
         <h3 className="p-6 font-medium lg:text-lg">
           Top 5 Most Populated Countries
         </h3>
-        <Table columns={columnsTableCountry} data={top5Country} />
+        <TableView columns={columnsTableCountry} data={top5Country} />
       </div>
 
       {/* section 3 */}
@@ -63,7 +63,7 @@ function Dashboard() {
         <h3 className="p-6 font-medium lg:text-lg">
           Top 5 Most Populated Cities
         </h3>
-        <Table columns={columnsTableCity} data={top5City} />
+        <TableView columns={columnsTableCity} data={top5City} />
       </div>
     </div>
   );

@@ -3,28 +3,28 @@
 @plugin "daisyui";
 
 .dark {
-  --color-background: #040d12;
-  --color-primary: #93b1a6;
-  --color-hover: #93b1a6;
+  --color-background: #2e3c44;
+  --color-primary: #bbe8d7;
   --color-text: #fafafae5;
-  --color-text-subtitle: #aaaaaa;
-  --color-border: oklch(46.532% 0.04301 261.126 / 0.527);
   --font-primary: "Noto Sans", sans-serif;
 }
 
 .light {
   --color-background: #ffffff;
-  --color-primary: #5c8374;
-  --color-hover: #5c8374;
+  --color-primary: #183D3D;
   --color-text: #000000;
-  --color-text-subtitle: #808080;
-  --color-border: #e2e1e1;
   --font-primary: "Noto Sans", sans-serif;
 }
 
-/* ===== BASE ===== */
-body {
-  background-color: var(--color-background);
-  font-family: var(--font-primary);
-  color: var(--color-text);
+/* ===== BASE LAYER ===== */
+@layer base {
+  html {
+    @apply antialiased;
+  }
+
+  body {
+    background-color: var(--color-background);
+    font-family: var(--font-primary);
+    color: var(--color-text);
+  }
 }
