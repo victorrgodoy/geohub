@@ -25,7 +25,7 @@ function Dashboard() {
     useDashboard();
   return (
     <div className="p-8 flex flex-col md:grid grid-cols-3 gap-14">
-      <div className="col-span-3 sm:flex border-[0.5px] border-r-0 rounded-md border-(--color-border)">
+      <div className="col-span-3 sm:flex border border-r-0 rounded-md border-(--color-text)/10">
         <Card
           title={"Total Population"}
           value={formatNumber(totalPopulation?.total)}
@@ -45,24 +45,20 @@ function Dashboard() {
       </div>
 
       {/* section 2 */}
-      <div className="border-[0.5px] shadow-sm border-(--color-border) col-span-3 rounded-md h-fit">
-        <h3 className="p-6 font-medium lg:text-lg">
-          Top 5 Most Populated Countries
-        </h3>
+      <div className="border shadow-sm border-(--color-text)/10 col-span-3 rounded-md h-fit">
+        <h3 className="p-4 font-semibold ">Top 5 Most Populated Countries</h3>
         <TableView columns={columnsTableCountry} data={top5Country} />
       </div>
 
       {/* section 3 */}
-      <div className="border-[0.5px] shadow-sm border-(--color-border) col-span-1  rounded-md pb-6">
-        <h3 className="p-6 font-medium lg:text-lg">Population by Continent</h3>
-        <div className="p-6 w-full h-64 flex sm:flex-row justify-center">
+      <div className="border shadow-sm border-(--color-text)/10 col-span-1  rounded-md pb-6">
+        <h3 className="p-4 font-semibold ">Population by Continent</h3>
+        <div className="p-4 w-full h-64 flex sm:flex-row justify-center">
           <Donut />
         </div>
       </div>
-      <div className="border-[0.5px] shadow-sm border-(--color-border) col-span-2 rounded-md h-fit">
-        <h3 className="p-6 font-medium lg:text-lg">
-          Top 5 Most Populated Cities
-        </h3>
+      <div className="border shadow-sm border-(--color-text)/10 col-span-2 rounded-md h-fit">
+        <h3 className="p-4 font-semibold ">Top 5 Most Populated Cities</h3>
         <TableView columns={columnsTableCity} data={top5City} />
       </div>
     </div>

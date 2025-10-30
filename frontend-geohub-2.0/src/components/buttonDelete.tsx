@@ -1,4 +1,4 @@
-import { Trash } from 'lucide-react'
+import { Trash } from "lucide-react";
 
 type Props = {
   onClick: () => void;
@@ -7,12 +7,13 @@ type Props = {
 export const ButtonDelete = ({ onClick }: Props) => {
   return (
     <button
-      onClick={onClick} 
+      onClick={onClick}
       className=" py-1
         hover:scale-105 transition duration-200 cursor-pointer
         text-red-600
-      ">
-      <Trash size={16}/>
+      "
+    >
+      <Trash size={16} />
     </button>
   );
 };

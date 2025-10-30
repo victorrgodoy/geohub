@@ -1,46 +1,50 @@
-import { ContinentContext } from "../../context/continent/continentContext";
-import { useContext, useState } from "react";
+import { useCountry } from "../../features/country/hooks/useCrud";
+import { useState } from "react";
 
 //components
 import { InputSearch } from "../../components/inputSearch";
 import { ButtonOpenModal } from "../../components/buttonOpenModal";
-import { Modal } from "../../features/continent/components/modal";
+import { Modal } from "../../features/country/components/modal";
 import { FilterButton } from "../../components/filterButton";
 import { TableView } from "../../components/tableView";
-import type { Continent as typeContinent } from "../../features/continent/api/continent";
+import type { Country as typeCountry } from "../../features/country/api/crud";
 import { ButtonDelete } from "../../components/buttonDelete";
 import { ButtonEdit } from "../../components/buttonEdit";
 
-function Continent() {
-  const { continents, handleCreate, handleDelete, handleEdit } = useContext(ContinentContext);
+function Country() {
+  const { countries, handleCreate, handleDelete, handleEdit } = useCountry();
   const [openModal, setOpenModal] = useState(false);
-  const [selectedContinent, setSelectedContinent] =
-    useState<typeContinent | null>(null);
+  const [selectedCountry, setSelectedCountry] = useState<typeCountry | null>(
+    null,
+  );
 
-  const handleEditClick = (continent: typeContinent) => {
-    setSelectedContinent(continent);
+  const handleEditClick = (country: typeCountry) => {
+    setSelectedCountry(country);
     setOpenModal(true);
   };
 
-  const handleCreateOrEdit = (continent: typeContinent) => {
-    if (selectedContinent) {
-      handleEdit(continent.id, continent);
+  const handleCreateOrEdit = (country: typeCountry) => {
+    if (selectedCountry) {
+      handleEdit(country.id, country);
     } else {
-      handleCreate(continent);
+      handleCreate(country);
     }
-    setSelectedContinent(null);
+    setSelectedCountry(null);
   };
 
-  const columnsContinent = [
-    { key: "name", label: "Name" },
-    { key: "description", label: "Description" },
+  const columnsCountry = [
+    { key: "name", label: "Name"},
+    { key: "population", label: "Population"},
+    { key: "official_language", label: "Official Language"},
+    { key: "currency", label: "Currency"},
+
     {
       key: "actions",
       label: "Actions",
-      render: (continent: typeContinent) => (
+      render: (country: typeCountry) => (
         <div className="flex gap-4 items-center">
-          <ButtonDelete onClick={() => handleDelete(continent.id)} />
-          <ButtonEdit onClick={() => handleEditClick(continent)} />
+          <ButtonDelete onClick={() => handleDelete(country.id)} />
+          {/* <ButtonEdit onClick={() => handleEditClick(country)} /> */}
         </div>
       ),
     },
@@ -51,9 +55,9 @@ function Continent() {
       {/* header */}
       <header className="mb-12 flex justify-between items-center">
         <div>
-          <h1 className="font-semibold">Continent</h1>
+          <h1 className="font-semibold">Country</h1>
           <p className="font-normal text-sm text-(--color-text)/60">
-            Manage and organize all continents efficiently in one place
+            Manage and organize all countries efficiently in one place
           </p>
         </div>
       </header>
@@ -69,12 +73,12 @@ function Continent() {
         </div>
       </section>
       <section>
-        <TableView columns={columnsContinent} data={continents} />
+        <TableView columns={columnsCountry} data={countries} />
       </section>
 
       {openModal && (
         <Modal
-          initialData={selectedContinent || undefined}
+          initialData={selectedCountry || undefined}
           onClose={() => setOpenModal(false)}
           onSubmit={handleCreateOrEdit}
         />
@@ -83,4 +87,4 @@ function Continent() {
   );
 }
 
-export default Continent;
+export default Country;

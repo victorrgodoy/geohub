@@ -1,26 +1,31 @@
-import api from "../../../lib/axios";
+import api from "../../../lib/axiosInstance";
 
 export interface Continent {
-  id:number
+  id: number;
   name?: string;
   description?: string;
 }
 
 export const listAllContinent = async (): Promise<Continent[]> => {
-  const { data } =  await api.get("/continent");
+  const { data } = await api.get("/continent");
   return data || [];
 };
 
-export const createContinent = async (continent: Continent): Promise<Continent> => {
-  const {data} = await api.post("/continent", continent);
+export const createContinent = async (
+  continent: Continent,
+): Promise<Continent> => {
+  const { data } = await api.post("/continent", continent);
   return data;
 };
 
 export const deleteContinent = async (id: number) => {
-  await api.delete(`/continent/${id}`)
-}
+  await api.delete(`/continent/${id}`);
+};
 
-export const updateContinent = async (id: number, continent: Continent): Promise<Continent> => {
-  const {data} = await api.put(`/continent/${id}`, continent)
+export const updateContinent = async (
+  id: number,
+  continent: Continent,
+): Promise<Continent> => {
+  const { data } = await api.put(`/continent/${id}`, continent);
   return data;
-}
+};

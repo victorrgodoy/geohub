@@ -1,20 +1,59 @@
-export const Input = () => {
-    return(
-        <label className="input input-sm bg-(--color-background) border-(--color-text)/30  
-        focus-within:shadow-[0_0_0_2px_var(--color-primary)/20]">
-            <svg className="h-[1em] opacity-50" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-                <g
-                strokeLinejoin="round"
-                strokeLinecap="round"
-                strokeWidth="2.5"
-                fill="none"
-                stroke="currentColor"
-                >
-                <circle cx="11" cy="11" r="8"></circle>
-                <path d="m21 21-4.3-4.3"></path>
-                </g>
-            </svg>
-            <input type="search" required placeholder="Search" />
-        </label>
-    )
+import type {
+  FieldErrors,
+  FieldValues,
+  Path,
+  UseFormRegister,
+} from "react-hook-form";
+
+type Props<T extends FieldValues> = {
+  type: React.HTMLInputTypeAttribute | undefined;
+  label: string;
+  value?: string | number | readonly string[] | undefined;
+  name: Path<T>;
+  errors: FieldErrors<T>;
+  register: UseFormRegister<T>;
+  disable?: boolean
+};
+
+function Input<T extends FieldValues>({
+  type,
+  label,
+  name,
+  errors,
+  register,
+  value,
+  disable
+}: Props<T>) {
+  const error = errors[name];
+
+  return (
+    <div className="flex flex-col gap-1 mb-6">
+      <label className="text-sm font-medium text-(--color-text)/90">
+        {label}
+      </label>
+      <input
+        disabled={disable}
+        value={value}
+        type={type}
+        placeholder="Official Language"
+        className={`
+                  border h-8 w-full p-3 text-sm rounded-md 
+                  placeholder-gray-400 
+                  transition-all duration-300 focus:outline-none 
+                  ${
+                    error
+                      ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-300"
+                      : "border-(--color-text)/30 focus:border-blue-500 focus:ring-1 focus:ring-blue-300"
+                  }
+                `}
+        {...register(name, { required: true })}
+      />
+
+      {error?.type === "required" && (
+        <p className="text-xs text-red-400">{label} is required.</p>
+      )}
+    </div>
+  );
 }
+
+export default Input;

@@ -25,8 +25,9 @@ export class CountryController {
 
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
-  async create(@Body() country: CreateCountryDto): Promise<Country> {
-    return this.countryService.create(country);
+  async create(@Body() country: CreateCountryDto): Promise<ResponseCountryDto> {
+    const created = await this.countryService.create(country);
+    return new ResponseCountryDto(created)
   }
 
   @Get('total-country')
@@ -70,8 +71,9 @@ export class CountryController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() country: UpdateCountryDto,
-  ): Promise<Country> {
-    return this.countryService.update(id, country);
+  ): Promise<ResponseCountryDto> {
+    const edited = await this.countryService.update(id, country);
+    return new ResponseCountryDto(edited)
   }
 
   @Delete(':id')

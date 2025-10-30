@@ -11,7 +11,7 @@
 
 .light {
   --color-background: #ffffff;
-  --color-primary: #183D3D;
+  --color-primary: #183d3d;
   --color-text: #000000;
   --font-primary: "Noto Sans", sans-serif;
 }
@@ -28,3 +28,4 @@
     color: var(--color-text);
   }
 }
+  

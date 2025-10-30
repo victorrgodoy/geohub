@@ -8,10 +8,10 @@ type Props = {
 
 function Card({ title, value, value_title }: Props) {
   return (
-    <div className="shadow-sm w-full overflow-hidden border-r-[0.5px] border-(--color-border)">
-      <div className="px-6 py-5 flex flex-col gap-4 items-center md:items-start">
+    <div className="shadow-sm w-full overflow-hidden border-r border-(--color-text)/10">
+      <div className="p-4 flex flex-col gap-2 items-center md:items-start">
         <div className="card-actions flex justify-between">
-          <h3 className="font-normal">{title}</h3>
+          <h3 className="font-normal text-sm">{title}</h3>
         </div>
         <p className="font-semibold text-3xl antialiased">{value}</p>
         <div className="flex gap-2">

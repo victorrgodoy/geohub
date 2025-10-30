@@ -15,4 +15,4 @@ export const FilterButton = () => {
       Filter
     </button>
   );
-}
+};

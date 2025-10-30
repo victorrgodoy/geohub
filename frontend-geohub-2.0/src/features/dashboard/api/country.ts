@@ -1,4 +1,4 @@
-import api from "../../../lib/axios";
+import api from "../../../lib/axiosInstance";
 
 export interface CountryTotalResponse {
   total: number;

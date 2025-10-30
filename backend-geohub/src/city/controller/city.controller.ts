@@ -24,8 +24,9 @@ export class CityController {
 
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
-  async create(@Body() city: CreateCityDto): Promise<City> {
-    return this.cityService.create(city);
+  async create(@Body() city: CreateCityDto): Promise<ResponseCityDto> {
+    const created = await this.cityService.create(city);
+    return new ResponseCityDto(created)
   }
 
   @Get('total-city')
@@ -65,8 +66,9 @@ export class CityController {
   async update(
     @Param('id', ParseIntPipe) id: number,
     @Body() city: UpdateCityDto,
-  ): Promise<City> {
-    return this.cityService.update(id, city);
+  ): Promise<ResponseCityDto> {
+    const edited = await this.cityService.update(id, city);
+    return new ResponseCityDto(edited)
   }
 
   @Delete(':id')
