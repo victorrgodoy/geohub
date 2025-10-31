@@ -1,7 +1,7 @@
 import { Continent } from 'generated/prisma';
 
 export class ResponseContinentDto {
-  id:number
+  id: number;
   name: string;
   description: string;
   createdAt?: Date;
