@@ -7,7 +7,7 @@ import Continent from "./pages/Continent";
 export const router = createBrowserRouter([
   {
     path: "/",
-    element: <Layout/>,
+    element: <Layout />,
     children: [
       // { index: true, element: <Dashboard /> },
       { path: "/continent", element: <Continent /> },

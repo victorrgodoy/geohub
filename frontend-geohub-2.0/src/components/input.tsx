@@ -12,7 +12,7 @@ type Props<T extends FieldValues> = {
   name: Path<T>;
   errors: FieldErrors<T>;
   register: UseFormRegister<T>;
-  disable?: boolean
+  disable?: boolean;
 };
 
 function Input<T extends FieldValues>({
@@ -22,20 +22,20 @@ function Input<T extends FieldValues>({
   errors,
   register,
   value,
-  disable
+  disable,
 }: Props<T>) {
   const error = errors[name];
 
   return (
     <div className="flex flex-col gap-1 mb-6">
-      <label className="text-sm font-medium text-(--color-text)/90">
+      <label className="text-sm font-medium text-(--color-text)/90 mb-2">
         {label}
       </label>
       <input
         disabled={disable}
         value={value}
         type={type}
-        placeholder="Official Language"
+        placeholder={label}
         className={`
                   border h-8 w-full p-3 text-sm rounded-md 
                   placeholder-gray-400 

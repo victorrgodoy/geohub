@@ -29,8 +29,8 @@
 //             official_language: languages[0] ?? "Unknown",
 //             currency: (currencies[0] as any)?.name ?? "Unknown",
 //            continent:
-//             c.region === "Americas" 
-//               ? c.subregion ?? c.region 
+//             c.region === "Americas"
+//               ? c.subregion ?? c.region
 //               : c.region ?? "Unknown",
 //                   };
 //         });

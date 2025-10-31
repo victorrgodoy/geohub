@@ -1,8 +1,8 @@
 export const InputSearch = () => {
   return (
     <label
-      className="input sm:w-60 w-full input-sm bg-(--color-background) border-(--color-text)/30  
-        focus-within:shadow-[0_0_0_2px_var(--color-primary)/20]"
+      className="input sm:w-60 w-full input-sm bg-(--color-bg-secondary) 
+      border-none outline-offset-1 outline-(--color-active) rounded-md text-sm"
     >
       <svg
         className="h-[1em] opacity-50"
@@ -12,7 +12,7 @@ export const InputSearch = () => {
         <g
           strokeLinejoin="round"
           strokeLinecap="round"
-          strokeWidth="2.5"
+          strokeWidth="3"
           fill="none"
           stroke="currentColor"
         >

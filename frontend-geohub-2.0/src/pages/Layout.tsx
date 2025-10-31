@@ -4,7 +4,7 @@ import { Menu } from "lucide-react";
 
 function Layout() {
   return (
-    <div className="drawer lg:drawer-open min-h-screen max-w-[1400px] mx-auto">
+    <div className="drawer lg:drawer-open min-h-screen">
       <input id="main-drawer" type="checkbox" className="drawer-toggle" />
       {/* SIDEBAR */}
       <Sidebar />
@@ -18,7 +18,7 @@ function Layout() {
           <Menu />
         </label>
 
-        <main className="flex-1 p-6">
+        <main className="flex-1 p-7">
           <Outlet />
         </main>
       </div>

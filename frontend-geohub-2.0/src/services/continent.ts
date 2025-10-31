@@ -1,9 +1,13 @@
 import api from "./api";
-import type { CreateContinent, ListContinent, UpdateContinent } from "../types/continent";
+import type {
+  CreateContinent,
+  ListContinent,
+  UpdateContinent,
+} from "../types/continent";
 
 const createContinent = async (
-  continent: CreateContinent, 
-): Promise<ListContinent> => { 
+  continent: CreateContinent,
+): Promise<ListContinent> => {
   const { data } = await api.post("/continent", continent);
   return data;
 };
@@ -25,4 +29,4 @@ const deleteContinent = async (id: number): Promise<void> => {
   await api.delete(`/continent/${id}`);
 };
 
-export {createContinent, listAllContinent, updateContinent, deleteContinent}
+export { createContinent, listAllContinent, updateContinent, deleteContinent };

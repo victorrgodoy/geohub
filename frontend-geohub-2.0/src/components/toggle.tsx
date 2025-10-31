@@ -9,8 +9,8 @@ function ThemeController() {
       type="checkbox"
       className="
                 toggle toggle-sm
-                bg-(--color-primary)/60
-                border-none  text-(--color-background)/80"
+                bg-(--color-primary-700)
+                border-none  text-(--color-bg-secondary)"
       checked={theme === "dark"}
       onChange={toggleTheme}
     />

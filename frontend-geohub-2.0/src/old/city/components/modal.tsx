@@ -60,9 +60,9 @@
 //                 type="text"
 //                 placeholder="Name"
 //                 className={`
-//                   border h-8 w-full p-3 text-sm rounded-md 
-//                   placeholder-gray-400 
-//                   transition-all duration-300 focus:outline-none 
+//                   border h-8 w-full p-3 text-sm rounded-md
+//                   placeholder-gray-400
+//                   transition-all duration-300 focus:outline-none
 //                   ${
 //                     errors?.name
 //                       ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-300"
@@ -86,9 +86,9 @@
 //                 type="number"
 //                 placeholder="Population"
 //                 className={`
-//                   border h-8 w-full p-3 text-sm rounded-md 
-//                   placeholder-gray-400 
-//                   transition-all duration-300 focus:outline-none 
+//                   border h-8 w-full p-3 text-sm rounded-md
+//                   placeholder-gray-400
+//                   transition-all duration-300 focus:outline-none
 //                   ${
 //                     errors?.population
 //                       ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-300"
@@ -112,9 +112,9 @@
 //                 type="number"
 //                 placeholder="Latitude"
 //                 className={`
-//                   border h-8 w-full p-3 text-sm rounded-md 
-//                   placeholder-gray-400 
-//                   transition-all duration-300 focus:outline-none 
+//                   border h-8 w-full p-3 text-sm rounded-md
+//                   placeholder-gray-400
+//                   transition-all duration-300 focus:outline-none
 //                   ${
 //                     errors?.latitude
 //                       ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-300"
@@ -138,9 +138,9 @@
 //                 type="number"
 //                 placeholder="Longitude"
 //                 className={`
-//                   border h-8 w-full p-3 text-sm rounded-md 
-//                   placeholder-gray-400 
-//                   transition-all duration-300 focus:outline-none 
+//                   border h-8 w-full p-3 text-sm rounded-md
+//                   placeholder-gray-400
+//                   transition-all duration-300 focus:outline-none
 //                   ${
 //                     errors?.longitude
 //                       ? "border-red-500 focus:border-red-500 focus:ring-1 focus:ring-red-300"
@@ -163,8 +163,8 @@
 //                 className="
 //                   py-1.5 w-full rounded-sm text-xs border font-semibold
 //                   cursor-pointer text-(--color-text)
-//                   active:bg-[--color-primary]/70 active:scale-97 transition  
-//                   border-(--color-text)/30 shadow-xs 
+//                   active:bg-[--color-primary]/70 active:scale-97 transition
+//                   border-(--color-text)/30 shadow-xs
 //                 "
 //               >
 //                 Cancel
@@ -172,10 +172,10 @@
 //               <button
 //                 type="submit"
 //                 className="
-//                 bg-blue-700/95 py-1.5 w-full rounded-sm 
+//                 bg-blue-700/95 py-1.5 w-full rounded-sm
 //                   text-xs font-semibold
-//                   cursor-pointer text-white hover:bg-blue-700 
-//                   active:bg-[--color-primary]/70 active:scale-97 transition  
+//                   cursor-pointer text-white hover:bg-blue-700
+//                   active:bg-[--color-primary]/70 active:scale-97 transition
 //                   "
 //               >
 //                 Save

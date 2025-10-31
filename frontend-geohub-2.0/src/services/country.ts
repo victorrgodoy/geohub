@@ -1,5 +1,9 @@
 import api from "./api";
-import type { CreateCountry, ListCountry, UpdateCountry } from "../types/country";
+import type {
+  CreateCountry,
+  ListCountry,
+  UpdateCountry,
+} from "../types/country";
 
 const createCountry = async (country: CreateCountry): Promise<ListCountry> => {
   const { data } = await api.post("/country", country);
@@ -23,5 +27,4 @@ const deleteCountry = async (id: number): Promise<void> => {
   await api.delete(`/country/${id}`);
 };
 
-export {createCountry, listAllCountry, updateCountry, deleteCountry}
-
+export { createCountry, listAllCountry, updateCountry, deleteCountry };

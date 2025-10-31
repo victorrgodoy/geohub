@@ -2,17 +2,69 @@
 @import "tailwindcss";
 @plugin "daisyui";
 
-.dark {
-  --color-background: #2e3c44;
-  --color-primary: #bbe8d7;
-  --color-text: #fafafae5;
+:root {
+  /* ===== PRIMARY COLORS ===== */
+  --color-primary-100: #b2c9ad;
+  --color-primary-200: #91ac8f;
+  --color-primary-500: #66785f;
+  --color-primary-700: #4b5945;
+
+  /* ===== TEXT COLORS ===== */
+  --color-text-primary: #000000;
+  --color-text-secondary: #666666;
+  --color-text-tertiary: #ffffff;
+
+  /* ===== BACKGROUND COLORS ===== */
+  --color-bg-primary: #ffffff;
+  --color-bg-secondary: #f8f9fa;
+  --color-bg-tertiary: #e9ecef;
+
+  /* ===== BORDER COLORS ===== */
+  --color-border-light: #e1e5e9;
+  --color-border-medium: #c8d0d7;
+  --color-border-strong: #94a3b8;
+
+  /* ===== STATE COLORS ===== */
+  --color-hover: #e5e9ed;
+  --color-active: #e2e8f0;
+  --color-focus: #dbeafe;
+
+  /* ===== SEMANTIC COLORS ===== */
+  --color-success: #10b981;
+  --color-warning: #f59e0b;
+  --color-error: #ef4444;
+  --color-info: #3b82f6;
+
+  /* ===== TEXT FONT ===== */
   --font-primary: "Noto Sans", sans-serif;
 }
 
-.light {
-  --color-background: #ffffff;
-  --color-primary: #183d3d;
-  --color-text: #000000;
+.dark {
+  --color-primary-100: #4b5945;
+  --color-primary-200: #66785f;
+  --color-primary-500: #91ac8f;
+  --color-primary-700: #b2c9ad;
+
+  /* ===== TEXT COLORS ===== */
+  --color-text-primary: #fafafae5;
+  --color-text-secondary: #cbd5e1;
+  --color-text-tertiary: #000000;
+
+  /* ===== BACKGROUND COLORS ===== */
+  --color-bg-primary: #2e3c44; /* Main background */
+  --color-bg-secondary: #1e2a32; /* Cards, sidebars *  
+  
+  /* ===== BORDER COLORS ===== */
+  --color-border-light: #334155;
+  --color-border-medium: #475569;
+  --color-border-strong: #64748b;
+
+  /* ===== STATE COLORS ===== */
+  --color-hover: #334155;
+  --color-active: #475569;
+  --color-focus: #1e40af;
+
+  /* ===== TEXT FONT ===== */
   --font-primary: "Noto Sans", sans-serif;
 }
 
@@ -23,9 +75,8 @@
   }
 
   body {
-    background-color: var(--color-background);
+    background-color: var(--color-bg-primary);
     font-family: var(--font-primary);
-    color: var(--color-text);
+    color: var(--color-text-primary);
   }
 }
-  

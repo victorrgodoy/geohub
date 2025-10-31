@@ -1,65 +1,49 @@
-import { useReactTable, getCoreRowModel, flexRender, createColumnHelper } from '@tanstack/react-table';
-import { EditableRow } from './editableRow';
+import {
+  useReactTable,
+  getCoreRowModel,
+  flexRender,
+  type ColumnDef,
+} from "@tanstack/react-table";
 
-type Column<T> = {
-  key: keyof T | "actions";
-  label: string;
-  render?: (row: T) => React.ReactNode;
-};
-
-type TableProps<T> = {
-  columns: Column<T>[];
+interface TableProps<T> {
   data: T[];
-};
+  columns: ColumnDef<T>[];
+}
 
-export const TableView = <T extends object>({ columns, data }: TableProps<T>) => {
-  const columnHelper = createColumnHelper<T>();
-
-  const tableColumns = columns.map(col => 
-    columnHelper.accessor(col.key as any, {
-      header: col.label,
-      cell: (info) => {
-        if (col.render) {
-          return col.render(info.row.original);
-        }
-        return String(info.getValue());
-      },
-    })
-  );
-
+export const TableView = <T,>({ data, columns }: TableProps<T>) => {
   const table = useReactTable({
     data,
-    columns: tableColumns,
+    columns,
     getCoreRowModel: getCoreRowModel(),
   });
 
   return (
-    <div className="overflow-x-auto pb-6 text-xs lg:text-sm rounded-sm">
-      <table className="table">
-        <thead>
-          {table.getHeaderGroups().map(headerGroup => (
+    <div className="overflow-x-auto border border-border-light rounded-lg">
+      <table className="w-full">
+        <thead className="bg-bg-tertiary">
+          {table.getHeaderGroups().map((headerGroup) => (
             <tr key={headerGroup.id}>
-              {headerGroup.headers.map(header => (
+              {headerGroup.headers.map((header) => (
                 <th
                   key={header.id}
-                  className="px-6 font-semibold text-(--color-text)/70 bg-(--color-text)/10"
+                  className="px-6 py-3 text-left text-sm font-semibold text-text-secondary"
                 >
-                  {flexRender(header.column.columnDef.header, header.getContext())}
+                  {flexRender(
+                    header.column.columnDef.header,
+                    header.getContext(),
+                  )}
                 </th>
               ))}
             </tr>
           ))}
         </thead>
-        <tbody>
-          {table.getRowModel().rows.map(row => (
-            <tr
-              key={row.id}
-              className="border-b border-(--color-text)/10 last:border-0"
-            >
-              {row.getVisibleCells().map(cell => (
+        <tbody className="bg-bg-primary divide-y divide-border-light">
+          {table.getRowModel().rows.map((row) => (
+            <tr key={row.id} className="hover:bg-hover transition-colors">
+              {row.getVisibleCells().map((cell) => (
                 <td
                   key={cell.id}
-                  className="px-6"
+                  className="px-6 py-4 text-sm text-text-primary"
                 >
                   {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>

@@ -7,9 +7,9 @@ interface Country {
   continentId: number;
 }
 
-type CreateCountry = Omit<Country, 'id'>;
+type CreateCountry = Omit<Country, "id">;
 type ListCountry = Country;
 type UpdateCountry = Country;
-type DeleteCountry = Pick<Country, 'id'>;
+type DeleteCountry = Pick<Country, "id">;
 
-export type {CreateCountry, ListCountry, UpdateCountry, DeleteCountry};
+export type { CreateCountry, ListCountry, UpdateCountry, DeleteCountry };

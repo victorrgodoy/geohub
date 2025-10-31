@@ -9,14 +9,14 @@ export const ButtonOpenModal = ({ onClick }: Props) => {
     <button
       onClick={() => onClick(true)}
       className="
-        flex items-center gap-1
-        bg-(--color-primary) text-(--color-background) font-medium
-        px-4 py-1.5 rounded-sm shadow-lg hover:shadow-lg
-        active:scale-97 transition duration-300 cursor-pointer text-xs
+        flex items-center gap-1 border-none
+        bg-(--color-primary-500) text-(--color-text-tertiary) 
+        px-5 h-8 rounded-md shadow-lg hover:shadow-lg font-medium
+        active:scale-97 transition duration-300 cursor-pointer text-sm
       "
     >
-      <Plus size={14} />
-      New
+      <Plus size={18} />
+      Add
     </button>
   );
 };

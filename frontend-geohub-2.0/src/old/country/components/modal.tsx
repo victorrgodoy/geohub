@@ -9,7 +9,6 @@
 // import type { RestCountry } from "../hooks/useRestCountries";
 // import { ContinentContext } from "../../../context/continent/continentContext";
 
-
 // type Props = {
 //   onClose: () => void;
 //   onSubmit: (country: Country) => void;
@@ -35,7 +34,7 @@
 //         name: "",
 //         population: 0,
 //         official_language: "",
-//         currency: "", 
+//         currency: "",
 //       });
 //     }
 //   }, [initialData, reset]);
@@ -44,7 +43,7 @@
 //   if (selectedCountry) {
 //     const continent = continents.find(c => c.name === selectedCountry.continent);
 //     if (continent) {
-//       data.continentId = continent.id; 
+//       data.continentId = continent.id;
 //     }
 //   }
 
@@ -78,7 +77,7 @@
 //                     population: country.population,
 //                     official_language: country.official_language,
 //                     currency: country.currency,
-                    
+
 //                   });
 //                 }
 //               }}
@@ -114,7 +113,7 @@
 //               name="continentId"
 //               errors={errors}
 //               register={register}
-//               value={selectedCountry?.continent ?? ""} 
+//               value={selectedCountry?.continent ?? ""}
 //             />
 
 //             {/* buttons */}
