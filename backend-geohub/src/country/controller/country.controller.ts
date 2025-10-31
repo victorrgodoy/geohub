@@ -23,6 +23,12 @@ import { ParseIntPipe } from '@nestjs/common';
 export class CountryController {
   constructor(private countryService: CountryService) {}
 
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  async findById(@Param('id', ParseIntPipe) id :number){
+    return await this.countryService.findById(id)
+  }
+
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
   async create(@Body() country: CreateCountryDto): Promise<ResponseCountryDto> {

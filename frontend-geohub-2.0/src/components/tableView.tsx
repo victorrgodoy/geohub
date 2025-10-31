@@ -1,62 +1,67 @@
-type Column<T = any> = {
-  key: string;
+import { useReactTable, getCoreRowModel, flexRender, createColumnHelper } from '@tanstack/react-table';
+import { EditableRow } from './editableRow';
+
+type Column<T> = {
+  key: keyof T | "actions";
   label: string;
   render?: (row: T) => React.ReactNode;
 };
 
 type TableProps<T> = {
   columns: Column<T>[];
-  data: (T & { flag?: string })[];
+  data: T[];
 };
 
-export const TableView = <T extends object>({
-  columns,
-  data,
-}: TableProps<T>) => {
+export const TableView = <T extends object>({ columns, data }: TableProps<T>) => {
+  const columnHelper = createColumnHelper<T>();
+
+  const tableColumns = columns.map(col => 
+    columnHelper.accessor(col.key as any, {
+      header: col.label,
+      cell: (info) => {
+        if (col.render) {
+          return col.render(info.row.original);
+        }
+        return String(info.getValue());
+      },
+    })
+  );
+
+  const table = useReactTable({
+    data,
+    columns: tableColumns,
+    getCoreRowModel: getCoreRowModel(),
+  });
+
   return (
     <div className="overflow-x-auto pb-6 text-xs lg:text-sm rounded-sm">
       <table className="table">
         <thead>
-          <tr>
-            {columns.map((col) => (
-              <th
-                key={col.key}
-                className="px-6  font-semibold text-(--color-text)/70 bg-(--color-text)/10  "
-              >
-                {col.label}
-              </th>
-            ))}
-          </tr>
+          {table.getHeaderGroups().map(headerGroup => (
+            <tr key={headerGroup.id}>
+              {headerGroup.headers.map(header => (
+                <th
+                  key={header.id}
+                  className="px-6 font-semibold text-(--color-text)/70 bg-(--color-text)/10"
+                >
+                  {flexRender(header.column.columnDef.header, header.getContext())}
+                </th>
+              ))}
+            </tr>
+          ))}
         </thead>
         <tbody>
-          {data.map((row, rowIndex) => (
+          {table.getRowModel().rows.map(row => (
             <tr
-              key={rowIndex}
+              key={row.id}
               className="border-b border-(--color-text)/10 last:border-0"
             >
-              {columns.map((col, colIndex) => (
+              {row.getVisibleCells().map(cell => (
                 <td
-                  key={colIndex}
-                  className={`px-6 ${
-                    col.key === "name" && row.flag
-                      ? "flex gap-2  items-center"
-                      : ""
-                  }`}
+                  key={cell.id}
+                  className="px-6"
                 >
-                  {col.render ? (
-                    col.render(row)
-                  ) : col.key === "name" && row.flag ? (
-                    <>
-                      <img
-                        src={row.flag}
-                        alt={`${String(row[col.key as keyof T])} flag`}
-                        className="w-8 rounded-sm "
-                      />
-                      {String(row[col.key as keyof T])}
-                    </>
-                  ) : (
-                    String(row[col.key as keyof T])
-                  )}
+                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
                 </td>
               ))}
             </tr>

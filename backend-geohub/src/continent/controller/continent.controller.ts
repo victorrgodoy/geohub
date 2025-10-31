@@ -20,6 +20,12 @@ import { ParseIntPipe } from '@nestjs/common';
 export class ContinentController {
   constructor(private continentService: ContinentService) {}
 
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  async findById(@Param('id', ParseIntPipe) id :number){
+    return await this.continentService.findById(id)
+  }
+
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
   async create(@Body() continent: CreateContinentDto): Promise<ResponseContinentDto> {
