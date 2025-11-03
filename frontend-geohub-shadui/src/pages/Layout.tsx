@@ -10,6 +10,12 @@ function Layout() {
   const getPageTitle = () => {
     const path = location.pathname;
     if (path === "/") return "Overview";
+
+
+    const segments = path.split("/").filter(Boolean);
+    const firstSegment = segments[0] ?? "";
+
+    return  firstSegment.charAt(0).toUpperCase() + firstSegment.slice(1);
   };
 
   const links = [

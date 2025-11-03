@@ -29,9 +29,11 @@ type Props = {
   defaultValues?: Partial<Continent>;
   onSave: (data: Continent) => void;
   onCancel: () => void;
+  onDelete: (id: number) => void;
 };
 
 export function OverviewModal({
+  onDelete,
   onSave,
   onCancel,
   defaultValues,
@@ -43,13 +45,32 @@ export function OverviewModal({
   } = useForm<Continent>({
     defaultValues: defaultValues || { name: "", description: "" },
   });
+ 
 
   return (
     <Card className="w-full max-w-md">
       <form onSubmit={handleSubmit(onSave)}>
         <CardHeader className="mb-10">
-          <CardTitle>Register a new Continent</CardTitle>
-          <CardDescription>Fill out the fields below to add.</CardDescription>
+          <div className="flex justify-between items-center">
+            <CardTitle>
+              {defaultValues && defaultValues.id ? "Edit Continent" : "Register a new Continent"}
+            </CardTitle>
+
+            {defaultValues && defaultValues.id && (
+              <Button
+                onClick={() => onDelete(defaultValues.id!)}
+                variant="destructive"
+                className="h-7 cursor-pointer"
+              >
+                Delete
+              </Button>
+            )}
+          </div>
+          <CardDescription>
+            {defaultValues && defaultValues.id
+              ? "Update the information below."
+              : "Fill out the fields below to add."}
+          </CardDescription>
         </CardHeader>
 
         <CardContent className="mb-10">

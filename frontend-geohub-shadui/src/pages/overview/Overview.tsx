@@ -4,7 +4,7 @@ import { useNavigate } from "react-router-dom";
 import { Earth, Plus } from "lucide-react";
 
 import { useTotalPopulation, useTotalCountry, useTop5Country } from "../../hooks/useCountry";
-import { useListContinent, useCreateContinent, useUpdateContinent } from "../../hooks/useContinent";
+import { useListContinent, useCreateContinent, useUpdateContinent, useDeleteContinent } from "../../hooks/useContinent";
 
 import { OverviewCardHeader } from "./components/OverviewCardHeader";
 import { OverviewCardContinent} from "./components/OverviewCardContinent";
@@ -19,14 +19,20 @@ function Overview() {
   const { data: totalPopulation } = useTotalPopulation();
   const { data: totalCountry } = useTotalCountry();
   const { data: continents } = useListContinent();
+  const deleteContinent = useDeleteContinent();
   const createMutation = useCreateContinent();
   const updateMutation = useUpdateContinent();
   const [openModal, setOpenModal] = useState(false);
-  const [editContinent, setEditContinent] = useState<Continent | null>(null);
+  const [editContinent, setEditContinent] = useState<Continent | null >(null);
   const navigate = useNavigate();
 
   function handleEdit(continent: Continent) {
     setEditContinent(continent);
+    setOpenModal(true);
+  }
+
+  function handleNew() {
+    setEditContinent(null)
     setOpenModal(true);
   }
 
@@ -39,6 +45,11 @@ function Overview() {
     setOpenModal(false);
   }
 
+  const handleDelete = async(id: number) => {
+    await deleteContinent.mutateAsync(id)
+    setOpenModal(false)
+  }
+
   const columnsCountry = [
     { key: 1, name: "id", label: "ID" },
     { key: 2, name: "name", label: "Name" },
@@ -46,6 +57,16 @@ function Overview() {
     { key: 4, name: "official_language", label: "Official Language"},
     { key: 5, name: "currency", label: "Currency"},
   ];
+
+    const totalPopulationByContinent: number[] =  [
+      1410000000,
+      4660000000,
+      748000000,
+      600000000,
+      430000000,
+      43000000,
+      1000,
+    ];
 
   return (
     <div className="grid grid-cols-3 gap-10">
@@ -70,8 +91,8 @@ function Overview() {
               <Earth strokeWidth={1.5} className="size-5" />
               <h2 className="text-lg font-medium">Continents in the System</h2>
             </div>
-            <Button className="h-9 cursor-pointer">
-              <Plus className="size-4" />Add
+            <Button onClick={handleNew} className="h-7 cursor-pointer">
+              <Plus className="size-4"/>Add
             </Button>
           </div>
           <div className="flex-1 overflow-y-auto flex flex-col divide-y divide-border">
@@ -89,7 +110,7 @@ function Overview() {
        <div className="w-full border rounded-md p-4">
          <h3 className="mb-6">Population by Continent</h3>
          <div className="w-full h-56 flex sm:flex-row justify-center">
-           <Donut />
+           <Donut data={totalPopulationByContinent}/>
          </div>
        </div>
       </section>
@@ -107,6 +128,7 @@ function Overview() {
             defaultValues={editContinent || undefined}
             onCancel={() => setOpenModal(false)}
             onSave={handleSave}
+            onDelete={handleDelete}
             />
         </div>
       )}
