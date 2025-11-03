@@ -1,8 +1,5 @@
 import api from "./api";
-import type {
-  Continent,
-  CreateContinent,
-} from "../types/Continent";
+import type { Continent, CreateContinent } from "../types/Continent";
 
 const createContinent = async (
   continent: CreateContinent,

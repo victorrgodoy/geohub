@@ -6,4 +6,4 @@ interface Continent {
 
 type CreateContinent = Omit<Continent, "id">;
 
-export type {Continent,CreateContinent};
+export type { Continent, CreateContinent };

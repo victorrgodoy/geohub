@@ -8,9 +8,9 @@ const queryClient = new QueryClient();
 function App() {
   return (
     <ThemeProvider>
-    <QueryClientProvider client={queryClient}>
+      <QueryClientProvider client={queryClient}>
         <RouterProvider router={router} />
-    </QueryClientProvider>
+      </QueryClientProvider>
     </ThemeProvider>
   );
 }

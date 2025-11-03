@@ -24,7 +24,7 @@ type Props<T> = {
 
 export function AppTable<T>({ caption, columns, data }: Props<T>) {
   return (
-    <Table className="table-fixed w-full"> 
+    <Table className="table-fixed w-full">
       <TableCaption>{caption}</TableCaption>
       <TableHeader>
         <TableRow className="w-full">
@@ -42,12 +42,13 @@ export function AppTable<T>({ caption, columns, data }: Props<T>) {
         {data.map((d, i) => (
           <TableRow key={i} className={i % 2 === 0 ? "bg-secondary" : ""}>
             {columns.map((c, j) => (
-              
               <TableCell
                 key={j}
                 className={j === columns.length - 1 ? "text-right" : undefined}
               >
-                {c.render ? c.render(d) : (d as any)[c.name] as React.ReactNode}
+                {c.render
+                  ? c.render(d)
+                  : ((d as any)[c.name] as React.ReactNode)}
               </TableCell>
             ))}
           </TableRow>

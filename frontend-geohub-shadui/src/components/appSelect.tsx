@@ -14,14 +14,20 @@ export type Items = {
 };
 
 type Props = {
-  value?: string;           
+  value?: string;
   placeholder: string;
   label: string;
   items: Items[];
-  onChange?: (value: string) => void;  
+  onChange?: (value: string) => void;
 };
 
-export function AppSelect({ placeholder, label, items, value, onChange }: Props) {
+export function AppSelect({
+  placeholder,
+  label,
+  items,
+  value,
+  onChange,
+}: Props) {
   return (
     <Select value={value} onValueChange={onChange}>
       <SelectTrigger className="w-full cursor-pointer">
@@ -31,7 +37,11 @@ export function AppSelect({ placeholder, label, items, value, onChange }: Props)
         <SelectGroup>
           <SelectLabel>{label}</SelectLabel>
           {items.map((item) => (
-            <SelectItem key={item.value} value={item.label} className="cursor-pointer">
+            <SelectItem
+              key={item.value}
+              value={item.label}
+              className="cursor-pointer"
+            >
               {item.label}
             </SelectItem>
           ))}

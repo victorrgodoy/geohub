@@ -9,4 +9,4 @@ interface City {
 
 type CreateCity = Omit<City, "id">;
 
-export type { City, CreateCity};
+export type { City, CreateCity };

@@ -17,33 +17,34 @@ import { AppSelect, type Items } from "../appSelect";
 import { useForm, Controller } from "react-hook-form";
 import type { Country } from "../../types/Country";
 
-
-const CountryItems:Items[] = [
+const CountryItems: Items[] = [
   {
-    value:"fefe",
-    label: "fef"
-  }
-]
+    value: "fefe",
+    label: "fef",
+  },
+];
 
 type Props = {
-  defaultValues?: Partial<Country>
+  defaultValues?: Partial<Country>;
   onSave: (data: Country) => void;
   onCancel: () => void;
 };
 
-export function AppCountryCardForm({
-  onSave,
-  onCancel,
-  defaultValues
-}: Props) {
+export function AppCountryCardForm({ onSave, onCancel, defaultValues }: Props) {
   const {
-  handleSubmit,
-  control,
-  formState: { errors }, 
-} = useForm<Country>({
-  defaultValues: defaultValues || 
-    { id: 0, name: "", population: 0, official_language: "" , currency: "", continentId: 0 },
-});
+    handleSubmit,
+    control,
+    formState: { errors },
+  } = useForm<Country>({
+    defaultValues: defaultValues || {
+      id: 0,
+      name: "",
+      population: 0,
+      official_language: "",
+      currency: "",
+      continentId: 0,
+    },
+  });
 
   return (
     <Card className="w-full max-w-md">
@@ -66,7 +67,7 @@ export function AppCountryCardForm({
                     placeholder="Select a Country"
                     label="Name"
                     items={CountryItems}
-                    {...field} 
+                    {...field}
                   />
                 )}
               />

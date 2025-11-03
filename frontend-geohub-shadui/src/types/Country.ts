@@ -7,6 +7,23 @@ interface Country {
   continentId: number;
 }
 
-type CreateCountry = Omit<Country, "id">;
+interface TotalCountry {
+  total: number;
+  updatedAt: string;
+}
 
-export type { CreateCountry, Country};
+interface TotalPopulation {
+  total: number;
+  updatedAt: string;
+}
+
+type CreateCountry = Omit<Country, "id">;
+type Top5Country = Omit<Country, "id">;
+
+export type {
+  CreateCountry,
+  Country,
+  TotalCountry,
+  TotalPopulation,
+  Top5Country,
+};

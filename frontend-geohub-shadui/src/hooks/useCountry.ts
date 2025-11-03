@@ -4,8 +4,12 @@ import {
   listAllCountry,
   updateCountry,
   deleteCountry,
+  totalCountry,
+  totalPopulation,
+  top5Country,
 } from "../services/country";
 import type { CreateCountry } from "../types/Country";
+import { formatDate } from "../utils/formatDate";
 
 const useCreateCountry = () => {
   const queryClient = useQueryClient();
@@ -45,9 +49,39 @@ const useDeleteCountry = () => {
   });
 };
 
+const useTotalCountry = () => {
+  return useQuery({
+    queryKey: ["total-ountries"],
+    queryFn: totalCountry,
+  });
+};
+
+const useTotalPopulation = () => {
+  return useQuery({
+    queryKey: ["total-population"],
+    queryFn: async () => {
+      const data = await totalPopulation();
+      return {
+        ...data,
+        formattedDate: formatDate(data.updatedAt),
+      };
+    },
+  });
+};
+
+const useTop5Country = () => {
+  return useQuery({
+    queryKey: ["top5-countries"],
+    queryFn: top5Country,
+  });
+};
+
 export {
   useCreateCountry,
   useListCountry,
   useUpdateCountry,
   useDeleteCountry,
+  useTotalCountry,
+  useTotalPopulation,
+  useTop5Country,
 };

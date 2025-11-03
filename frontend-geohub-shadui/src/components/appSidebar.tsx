@@ -17,36 +17,20 @@ import { Link, useLocation } from "react-router-dom";
 
 const items = [
   {
-    title: "Dashboard",
-    url: "#",
+    title: "Overview",
+    url: "/",
     icon: LayoutDashboard,
-  },
-  {
-    title: "City",
-    url: "#",
-    icon: Building2,
-  },
-  {
-    title: "Country",
-    url: "/country",
-    icon: Flag,
-  },
-  {
-    title: "Continent",
-    url: "/continent",
-    icon: Earth,
   },
 ];
 
 export function AppSidebar() {
-
   const location = useLocation();
   const currentPath = location.pathname;
-  
+
   return (
-    <Sidebar >
+    <Sidebar>
       <SidebarContent className="flex flex-col justify-between py-5 px-3">
-        <SidebarGroup >
+        <SidebarGroup>
           <SidebarHeader>
             <p className="text-xl mb-5 font-bold text-primary">GEOHUB</p>
           </SidebarHeader>
@@ -55,38 +39,38 @@ export function AppSidebar() {
             <SidebarMenu>
               {items.map((item) => {
                 const isActive = currentPath === item.url;
-                
+
                 return (
-                  <SidebarMenuItem key={item.title}>  
-                  <SidebarMenuButton 
-                    asChild
-                    data-active={isActive}
-                    className="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=true]:hover:bg-primary"
-                  >
-                    <Link 
-                      to={item.url}
-                      className="flex items-center gap-2 w-full"
+                  <SidebarMenuItem key={item.title}>
+                    <SidebarMenuButton
+                      asChild
+                      data-active={isActive}
+                      className="data-[active=true]:bg-primary data-[active=true]:text-primary-foreground data-[active=true]:hover:bg-primary"
                     >
-                      <item.icon/>
-                      <span>{item.title}</span>
-                    </Link>
-                  </SidebarMenuButton>
+                      <Link
+                        to={item.url}
+                        className="flex items-center gap-2 w-full"
+                      >
+                        <item.icon />
+                        <span>{item.title}</span>
+                      </Link>
+                    </SidebarMenuButton>
                   </SidebarMenuItem>
                 );
               })}
             </SidebarMenu>
           </SidebarGroupContent>
         </SidebarGroup>
-      <SidebarGroup>
-        <SidebarGroupLabel>Config</SidebarGroupLabel>
-        <SidebarGroupContent className="px-2">
-          <SidebarMenu>
-            <SidebarMenuItem>
-              <AppSwitch />
-            </SidebarMenuItem>
-          </SidebarMenu>
-        </SidebarGroupContent>
-      </SidebarGroup>
+        <SidebarGroup>
+          <SidebarGroupLabel>Config</SidebarGroupLabel>
+          <SidebarGroupContent className="px-2">
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <AppSwitch />
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
         <SidebarFooter className="mt-auto">
           <footer className="text-sm">© 2025 Geohub </footer>
         </SidebarFooter>

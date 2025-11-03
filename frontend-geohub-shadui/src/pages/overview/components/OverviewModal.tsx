@@ -1,4 +1,3 @@
-//ui
 import {
   Card,
   CardContent,
@@ -6,16 +5,15 @@ import {
   CardFooter,
   CardHeader,
   CardTitle,
-} from "../../components/ui/card";
-import { Button } from "../../components/ui/button";
-import { Label } from "../ui/label";
+} from "../../../components/ui/card";
+import { Button } from "../../../components/ui/button";
+import { Label } from "../../../components/ui/label";
 
-//components
-import { AppSelect } from "../appSelect";
-import { AppTextArea } from "../appTextArea";
+import { AppSelect } from "../../../components/appSelect";
+import { AppTextArea } from "../../../components/appTextArea";
 
 import { useForm, Controller } from "react-hook-form";
-import type { Continent } from "../../types/Continent";
+import type { Continent } from "../../../types/Continent";
 
 const continentItems = [
   { label: "Africa", value: "africa" },
@@ -25,24 +23,26 @@ const continentItems = [
   { label: "North America", value: "north_america" },
   { label: "Oceania", value: "oceania" },
   { label: "South America", value: "south_america" },
-]; 
+];
 
 type Props = {
-  defaultValues?: Partial<Continent>
+  defaultValues?: Partial<Continent>;
   onSave: (data: Continent) => void;
   onCancel: () => void;
 };
 
-export function AppContinentCardForm({
+export function OverviewModal({
   onSave,
   onCancel,
-  defaultValues
+  defaultValues,
 }: Props) {
   const {
     handleSubmit,
     control,
-    formState: { errors }, 
-  } = useForm<Continent>({defaultValues:defaultValues || { name: "", description: "" },});
+    formState: { errors },
+  } = useForm<Continent>({
+    defaultValues: defaultValues || { name: "", description: "" },
+  });
 
   return (
     <Card className="w-full max-w-md">
@@ -65,7 +65,7 @@ export function AppContinentCardForm({
                     placeholder="Select a continent"
                     label="Name"
                     items={continentItems}
-                    {...field} 
+                    {...field}
                   />
                 )}
               />
@@ -81,10 +81,7 @@ export function AppContinentCardForm({
                 control={control}
                 rules={{ required: true }}
                 render={({ field }) => (
-                  <AppTextArea
-                    {...field}
-                    placeholder="Description"
-                  />
+                  <AppTextArea {...field} placeholder="Description" />
                 )}
               />
               {errors?.description?.type === "required" && (

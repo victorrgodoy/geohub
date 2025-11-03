@@ -1,14 +1,11 @@
-import { MapPin } from "lucide-react";
-
-import { Button } from "./ui/button";
+import { Button } from "../../../components/ui/button";
 import {
   Item,
   ItemActions,
   ItemContent,
   ItemDescription,
-  ItemMedia,
   ItemTitle,
-} from "./ui/item";
+} from "../../../components/ui/item";
 
 type Props = {
   title: string;
@@ -17,12 +14,14 @@ type Props = {
   onExplore: () => void;
 };
 
-export function AppItem({ title, description, onEdit, onExplore }: Props) {
+export function OverviewCardContinent({
+  title,
+  description,
+  onEdit,
+  onExplore,
+}: Props) {
   return (
     <Item variant="default">
-      <ItemMedia>
-        <MapPin className="size-6 mt-2 text-icon" />
-      </ItemMedia>
       <ItemContent>
         <ItemTitle className="text-lg">{title}</ItemTitle>
         <ItemDescription>{description}</ItemDescription>
