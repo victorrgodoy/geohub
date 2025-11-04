@@ -109,3 +109,7 @@ Prettier
 ```bash
 npx prettier . --write
 ```
+
+
+Seed
+npm run seed:continents

@@ -23,10 +23,30 @@ import { ParseIntPipe } from '@nestjs/common';
 export class CountryController {
   constructor(private countryService: CountryService) {}
 
+@Get('stats/total-population')
+@HttpCode(HttpStatus.OK)
+async getTotalPopulation(): Promise<{
+  total: number;
+  updatedAt: Date | null;
+}> {
+  return await this.countryService.getTotalPopulation();
+}
+
+
+  @Get('stats/total-country')
+  @HttpCode(HttpStatus.OK)
+  async getTotalCountries(): Promise<{
+    total: number;
+    updatedAt: Date | null;
+  }> {
+    return await this.countryService.getTotalCountry();
+  }
+
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async findById(@Param('id', ParseIntPipe) id :number){
-    return await this.countryService.findById(id)
+    const finded = await this.countryService.findById(id)
+    return new ResponseCountryDto(finded);
   }
 
   @Post()
@@ -36,39 +56,23 @@ export class CountryController {
     return new ResponseCountryDto(created)
   }
 
-  @Get('total-country')
-  @HttpCode(HttpStatus.OK)
-  async getTotalCountries(): Promise<{
-    total: number;
-    updatedAt: Date | null;
-  }> {
-    return await this.countryService.getTotalCountry();
-  }
-
-  @Get('total-population')
-  @HttpCode(HttpStatus.OK)
-  async getTotalPopulation(): Promise<{
-    total: number;
-    updatedAt: Date | null;
-  }> {
-    return await this.countryService.getTotalPopulation();
-  }
-
   @Get()
   @HttpCode(HttpStatus.OK)
   async list(
-    @Query('continentName') continentName?: string,
-    @Query('top5', ParseBoolPipe) top5?: boolean,
+    @Query('continentId') continentId?: string,
+    @Query('top5') top5?: string,
   ): Promise<ResponseCountryDto[]> {
     let countries: Country[];
+    const top5Bool = top5 === 'true';
 
-    if (continentName) {
-      countries = await this.countryService.findByContinent(continentName);
-    } else if (top5) {
+    if (continentId) {
+      countries = await this.countryService.findByContinentId(Number(continentId));
+    } else if (top5Bool) {
       countries = await this.countryService.listTop5ByPopulation();
     } else {
       countries = await this.countryService.listAll();
     }
+
     return countries.map((c) => new ResponseCountryDto(c));
   }
 

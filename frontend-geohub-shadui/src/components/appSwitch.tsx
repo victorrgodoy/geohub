@@ -10,7 +10,7 @@ export function AppSwitch() {
     <div className="flex items-center space-x-2 ">
       <Switch
         id="dark-mode"
-        className="cursor-pointer data-[state=unchecked]:bg-primary"
+        className="cursor-pointer data-[state=checked]:bg-foreground data-[state=unchecked]:bg-foreground "
         checked={theme === "dark"}
         onCheckedChange={toggleTheme}
       />

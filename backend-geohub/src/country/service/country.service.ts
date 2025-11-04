@@ -24,12 +24,12 @@ export class CountryService {
     return await this.countryRepository.getTotalPopulation();
   }
 
-  public async findByContinent(continentName: string): Promise<Country[]> {
+  public async findByContinentId(id: number): Promise<Country[]> {
     const countries =
-      await this.countryRepository.findByContinent(continentName);
+      await this.countryRepository.findByContinentId(id);
     if (!countries || countries.length === 0) {
       throw new NotFoundException(
-        `No countries found for continent ${continentName}`,
+        `No countries found for continent with ID: ${id}`,
       );
     }
     return countries;

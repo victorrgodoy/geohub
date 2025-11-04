@@ -1,4 +1,4 @@
-import api from "./api";
+import {api} from "./api";
 import type { CreateCity, City } from "../types/City";
 
 const createCity = async (city: CreateCity): Promise<City> => {

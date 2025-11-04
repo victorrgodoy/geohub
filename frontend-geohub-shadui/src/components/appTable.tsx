@@ -3,7 +3,6 @@ import {
   TableBody,
   TableCaption,
   TableCell,
-  TableFooter,
   TableHead,
   TableHeader,
   TableRow,
@@ -17,21 +16,21 @@ type Column<T> = {
 };
 
 type Props<T> = {
-  caption: string;
+  caption?: string;
   columns: Column<T>[];
   data: T[];
 };
 
 export function AppTable<T>({ caption, columns, data }: Props<T>) {
   return (
-    <Table className="table-fixed w-full">
-      <TableCaption>{caption}</TableCaption>
+    <Table>
+      {caption && <TableCaption>{caption}</TableCaption>}
       <TableHeader>
-        <TableRow className="w-full">
-          {columns.map((c, i) => (
+        <TableRow>
+          {columns.map((c) => (
             <TableHead
               key={c.key}
-              className={i === columns.length - 1 ? "text-right" : undefined}
+              className="h-10 px-4 text-xs font-medium text-muted-foreground/60"
             >
               {c.label}
             </TableHead>
@@ -40,26 +39,25 @@ export function AppTable<T>({ caption, columns, data }: Props<T>) {
       </TableHeader>
       <TableBody>
         {data.map((d, i) => (
-          <TableRow key={i} className={i % 2 === 0 ? "bg-secondary" : ""}>
+          <TableRow 
+            key={i}
+            className="hover:bg-muted/50 transition-colors"
+          >
             {columns.map((c, j) => (
               <TableCell
                 key={j}
-                className={j === columns.length - 1 ? "text-right" : undefined}
+                className="px-4 py-3"
               >
-                {c.render
-                  ? c.render(d)
-                  : ((d as any)[c.name] as React.ReactNode)}
+                <span className="text-sm font-medium text-foreground/80">
+                  {c.render
+                    ? c.render(d)
+                    : ((d as any)[c.name] as React.ReactNode)}
+                </span>
               </TableCell>
             ))}
           </TableRow>
         ))}
       </TableBody>
-      <TableFooter>
-        {/* <TableRow>
-          <TableCell colSpan={3}>Total</TableCell>
-          <TableCell className="text-right">$2,500.00</TableCell>
-        </TableRow> */}
-      </TableFooter>
     </Table>
   );
 }

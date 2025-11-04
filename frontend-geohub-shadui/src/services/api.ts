@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const api = axios.create({
+export const api = axios.create({
   baseURL: import.meta.env.VITE_BACKEND_API_URL,
   timeout: 1000,
   headers: {
@@ -8,4 +8,6 @@ const api = axios.create({
   },
 });
 
-export default api;
+export const restCountriesApi = axios.create({
+  baseURL: "https://restcountries.com/v3.1",
+});

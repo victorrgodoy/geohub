@@ -1,5 +1,10 @@
-import api from "./api";
+import {api} from "./api";
 import type { Continent, CreateContinent } from "../types/Continent";
+
+const findById = async (id: number): Promise<Continent> => {
+  const {data} = await api.get(`continent/${id}`)
+  return data;
+}
 
 const createContinent = async (
   continent: CreateContinent,
@@ -25,4 +30,4 @@ const deleteContinent = async (id: number): Promise<void> => {
   await api.delete(`/continent/${id}`);
 };
 
-export { createContinent, listAllContinent, updateContinent, deleteContinent };
+export { findById, createContinent, listAllContinent, updateContinent, deleteContinent };

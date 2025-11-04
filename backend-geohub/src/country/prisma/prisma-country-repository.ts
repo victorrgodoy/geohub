@@ -43,14 +43,12 @@ export class PrismaCountryRepository implements CountryRepository {
     };
   }
 
-  async findByContinent(continentName: string): Promise<Country[]> {
+  async findByContinentId(id: number): Promise<Country[]> {
     return await this.prisma.country.findMany({
       where: {
-        continent: {
-          con_name: continentName,
-        },
-      },
-    });
+        con_id: id
+      }
+    }) 
   }
 
   async findById(id: number): Promise<Country> {

@@ -9,7 +9,7 @@ export abstract class CountryRepository {
   abstract update(id: number, update: UpdateCountryDto): Promise<Country>;
   abstract delete(id: number): Promise<void>;
 
-  abstract findByContinent(continentName: string): Promise<Country[]>;
+  abstract findByContinentId(id: number): Promise<Country[]>;
   abstract getTotalPopulation(): Promise<{
     total: number;
     updatedAt: Date | null;

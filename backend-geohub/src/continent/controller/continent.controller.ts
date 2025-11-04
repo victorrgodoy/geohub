@@ -11,7 +11,6 @@ import {
 } from '@nestjs/common';
 import { ContinentService } from '../service/continent.service';
 import { CreateContinentDto } from '../dtos/create-continent-dto';
-import { Continent } from 'generated/prisma';
 import { UpdateContinentDto } from '../dtos/update-continent-dto';
 import { ResponseContinentDto } from '../dtos/response-continent-dto';
 import { ParseIntPipe } from '@nestjs/common';
@@ -19,11 +18,13 @@ import { ParseIntPipe } from '@nestjs/common';
 @Controller('/continent')
 export class ContinentController {
   constructor(private continentService: ContinentService) {}
-
+  
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async findById(@Param('id', ParseIntPipe) id :number){
-    return await this.continentService.findById(id)
+    const finded = await this.continentService.findById(id);
+    return new ResponseContinentDto(finded);
+
   }
 
   @Post()

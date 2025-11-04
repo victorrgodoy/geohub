@@ -1,138 +1,57 @@
-import type { Continent } from "../../types/Continent";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { Earth, Plus } from "lucide-react";
-
-import { useTotalPopulation, useTotalCountry, useTop5Country } from "../../hooks/useCountry";
-import { useListContinent, useCreateContinent, useUpdateContinent, useDeleteContinent } from "../../hooks/useContinent";
-
-import { OverviewCardHeader } from "./components/OverviewCardHeader";
-import { OverviewCardContinent} from "./components/OverviewCardContinent";
-import { OverviewModal } from "./components/OverviewModal";
-import { Button } from "../../components/ui/button";
-import { Donut } from "./components/OverviewDonut";
-import { AppTable } from "../../components/appTable";
-import type { Top5Country } from "../../types/Country";
+import { TableCountry } from "./components/table-country/tableCountry";
+import { CardContinent, CardModalContinent } from "./components/card-continent/index";
+import { CardStats } from "./components/card-stats/index";
+import { useOverviewModal } from "../../hooks/overview";
 
 function Overview() {
-  const { data: top5Countries} = useTop5Country();
-  const { data: totalPopulation } = useTotalPopulation();
-  const { data: totalCountry } = useTotalCountry();
-  const { data: continents } = useListContinent();
-  const deleteContinent = useDeleteContinent();
-  const createMutation = useCreateContinent();
-  const updateMutation = useUpdateContinent();
-  const [openModal, setOpenModal] = useState(false);
-  const [editContinent, setEditContinent] = useState<Continent | null >(null);
   const navigate = useNavigate();
+  const { 
+    isOpen, 
+    editingContinent, 
+    openNew, 
+    openEdit, 
+    close, 
+    save, 
+    remove 
+  } = useOverviewModal();
 
-  function handleEdit(continent: Continent) {
-    setEditContinent(continent);
-    setOpenModal(true);
-  }
-
-  function handleNew() {
-    setEditContinent(null)
-    setOpenModal(true);
-  }
-
-   const handleSave = async (continent:Continent) => {
-    if(continent.id){
-      await updateMutation.mutateAsync({id: continent.id, data:continent})
-    }else{
-      await createMutation.mutateAsync(continent)
-    }
-    setOpenModal(false);
-  }
-
-  const handleDelete = async(id: number) => {
-    await deleteContinent.mutateAsync(id)
-    setOpenModal(false)
-  }
-
-  const columnsCountry = [
-    { key: 1, name: "id", label: "ID" },
-    { key: 2, name: "name", label: "Name" },
-    { key: 3, name: "population", label: "Population"},
-    { key: 4, name: "official_language", label: "Official Language"},
-    { key: 5, name: "currency", label: "Currency"},
-  ];
-
-    const totalPopulationByContinent: number[] =  [
-      1410000000,
-      4660000000,
-      748000000,
-      600000000,
-      430000000,
-      43000000,
-      1000,
-    ];
+  const handleExplore = (continentId: number) => {
+    navigate(`/continent/${continentId}/country`);
+  };
 
   return (
-    <div className="grid grid-cols-3 gap-10">
-      <section className="col-span-3">
-        <div className="w-full rounded-md gap-1 flex flex-col sm:flex-row border">
-          <OverviewCardHeader
-            header="Total Population"
-            item={totalPopulation}
+    <div className="flex flex-col gap-8">
+      <div className="w-full">
+        <CardStats />
+      </div>
+
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8">
+        <section className="lg:col-span-7">
+          <CardContinent
+            onNew={openNew}
+            onEdit={openEdit}
+            onExplore={handleExplore}
           />
-          <div className="border-[0.5px] border-border" />
-          <OverviewCardHeader header="Total Countries" item={totalCountry} />
-          <div className="border-[0.5px] border-border" />
-          <OverviewCardHeader header="Total Cities" item={totalPopulation} />
-        </div>
-      </section>
+        </section>
+        
+        <section className="lg:col-span-5">
+          <TableCountry />
+        </section>
+      </div>
 
-      {/* SECTION 2 */}
-    <section className="flex flex-col lg:grid grid-cols-3 gap-4 col-span-3">
-     <div className="col-span-2 border py-4 rounded-md flex flex-col min-h-72 max-h-80">
-          <div className="flex justify-between items-center gap-2 mb-4 px-4">
-            <div className="flex items-center gap-2">
-              <Earth strokeWidth={1.5} className="size-5" />
-              <h2 className="text-lg font-medium">Continents in the System</h2>
-            </div>
-            <Button onClick={handleNew} className="h-7 cursor-pointer">
-              <Plus className="size-4"/>Add
-            </Button>
-          </div>
-          <div className="flex-1 overflow-y-auto flex flex-col divide-y divide-border">
-            {continents?.map((continent) => (
-              <OverviewCardContinent
-                key={continent.id}
-                title={continent.name}
-                description={continent.description}
-                onEdit={() => handleEdit(continent)}
-                onExplore={() => navigate(`/continent/${continent.id}/country`)}
-              />
-            ))}
-          </div>
-        </div>
-       <div className="w-full border rounded-md p-4">
-         <h3 className="mb-6">Population by Continent</h3>
-         <div className="w-full h-56 flex sm:flex-row justify-center">
-           <Donut data={totalPopulationByContinent}/>
-         </div>
-       </div>
-      </section>
-      
-      <section className="col-span-3">
-        <div>
-          <h3 className="text-lg font-medium">Top 5 Countries</h3>
-          <AppTable<Top5Country> caption="Top 5 Countries" columns={columnsCountry} data={top5Countries ?? []}/>
-        </div>
-      </section>
-
-      {openModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-          <OverviewModal
-            defaultValues={editContinent || undefined}
-            onCancel={() => setOpenModal(false)}
-            onSave={handleSave}
-            onDelete={handleDelete}
-            />
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4">
+          <CardModalContinent
+            defaultValues={editingContinent || undefined}
+            onCancel={close}
+            onSave={save}
+            onDelete={remove}
+          />
         </div>
       )}
     </div>
   );
 }
+
 export default Overview;

@@ -25,7 +25,8 @@ export class CityController {
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async findById(@Param('id', ParseIntPipe) id :number){
-    return await this.cityService.findById(id)
+    const finded = await this.cityService.findById(id)
+    return new ResponseCityDto(finded);
   }
 
   @Post()
