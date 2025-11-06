@@ -8,7 +8,7 @@ async function bootstrap() {
   const prisma = appContext.get(PrismaService);
 
   const { data: countriesData } = await axios.get(
-    'https://restcountries.com/v3.1/all?fields=name,flags,region,languages,currencies,population,subregion'
+    'https://restcountries.com/v3.1/all?fields=name,flags,region,languages,currencies,population,subregion',
   );
 
   for (const c of countriesData) {

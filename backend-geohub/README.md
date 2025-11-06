@@ -112,4 +112,5 @@ npx prettier . --write
 
 
 Seed
-npm run seed:continents
+npm run seed:continent
+npm run seed:country

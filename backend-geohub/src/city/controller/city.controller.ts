@@ -24,8 +24,8 @@ export class CityController {
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async findById(@Param('id', ParseIntPipe) id :number){
-    const finded = await this.cityService.findById(id)
+  async findById(@Param('id', ParseIntPipe) id: number) {
+    const finded = await this.cityService.findById(id);
     return new ResponseCityDto(finded);
   }
 
@@ -33,10 +33,10 @@ export class CityController {
   @HttpCode(HttpStatus.ACCEPTED)
   async create(@Body() city: CreateCityDto): Promise<ResponseCityDto> {
     const created = await this.cityService.create(city);
-    return new ResponseCityDto(created)
+    return new ResponseCityDto(created);
   }
 
-  @Get('total-city')
+  @Get('stats/total-city')
   @HttpCode(HttpStatus.OK)
   async getTotalCity(): Promise<{ total: number; updatedAt: Date | null }> {
     return await this.cityService.getTotalCity();
@@ -75,7 +75,7 @@ export class CityController {
     @Body() city: UpdateCityDto,
   ): Promise<ResponseCityDto> {
     const edited = await this.cityService.update(id, city);
-    return new ResponseCityDto(edited)
+    return new ResponseCityDto(edited);
   }
 
   @Delete(':id')
