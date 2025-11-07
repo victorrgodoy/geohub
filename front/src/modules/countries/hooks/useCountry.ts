@@ -14,7 +14,7 @@ import type { CreateCountry } from "../types";
 const useFindByContinentIdCountry = (id: number) => {
     return useQuery({
         queryKey: ["continent-countries", id],
-        queryFn: () => findByContinentId(id!),
+        queryFn: () => findByContinentId(id),
         enabled: !!id,
     });
 };

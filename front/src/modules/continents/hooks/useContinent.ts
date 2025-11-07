@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-    findById,
+    findByIdContinent,
     createContinent,
     listAllContinent,
     updateContinent,
@@ -11,8 +11,7 @@ import type { CreateContinent } from "../types";
 const useFindByIdContinent = (id: number) => {
     return useQuery({
         queryKey: ["continent", id],
-        queryFn: () => findById(id),
-        enabled: !!id
+        queryFn: () => findByIdContinent(id),
     });
 };
 

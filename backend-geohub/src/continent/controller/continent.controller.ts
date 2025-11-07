@@ -18,18 +18,19 @@ import { ParseIntPipe } from '@nestjs/common';
 @Controller('/continent')
 export class ContinentController {
   constructor(private continentService: ContinentService) {}
-  
+
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async findById(@Param('id', ParseIntPipe) id :number){
+  async findById(@Param('id', ParseIntPipe) id: number) {
     const finded = await this.continentService.findById(id);
     return new ResponseContinentDto(finded);
-
   }
 
   @Post()
   @HttpCode(HttpStatus.ACCEPTED)
-  async create(@Body() continent: CreateContinentDto): Promise<ResponseContinentDto> {
+  async create(
+    @Body() continent: CreateContinentDto,
+  ): Promise<ResponseContinentDto> {
     const created = await this.continentService.create(continent);
     return new ResponseContinentDto(created)
   }
@@ -48,8 +49,7 @@ export class ContinentController {
     @Body() continent: UpdateContinentDto,
   ): Promise<ResponseContinentDto> {
     const edited = await this.continentService.update(id, continent);
-    return new ResponseContinentDto(edited)
-
+    return new ResponseContinentDto(edited);
   }
 
   @Delete(':id')

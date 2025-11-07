@@ -1,13 +1,4 @@
-import { Plus, Users, Globe, Building2, ChevronLeft, ChevronRight } from "lucide-react";
-import {
-    useListContinent,
-    useCreateContinent,
-    useUpdateContinent,
-    ContinentCard,
-    ContinentModal,
-    type Continent,
-    type CreateContinent
-} from "../modules/continents";
+import { Users, Globe, Building2, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTotalPopulation, useTotalCountry } from "../modules/countries";
 import { useTotalCity } from "../modules/cities";
 import { StatCard } from "../modules/overview";
@@ -19,13 +10,6 @@ export default function ContinentsPage() {
     const { data: totalCountries, isLoading: isLoadingCountries } = useTotalCountry();
     const { data: totalCities, isLoading: isLoadingCities } = useTotalCity();
 
-    // Continents
-    const { data: continents, isLoading: isLoadingContinents } = useListContinent();
-    const createMutation = useCreateContinent();
-    const updateMutation = useUpdateContinent();
-
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [selectedContinent, setSelectedContinent] = useState<Continent | null>(null);
     const [currentStatIndex, setCurrentStatIndex] = useState(0);
 
     const stats = [
@@ -72,34 +56,6 @@ export default function ContinentsPage() {
         setCurrentStatIndex((prev) => (prev - 1 + stats.length) % stats.length);
     };
 
-    const handleOpenCreateModal = () => {
-        setSelectedContinent(null);
-        setIsModalOpen(true);
-    };
-
-    const handleOpenEditModal = (continent: Continent) => {
-        setSelectedContinent(continent);
-        setIsModalOpen(true);
-    };
-
-    const handleCloseModal = () => {
-        setIsModalOpen(false);
-        setSelectedContinent(null);
-    };
-
-    const handleSubmit = async (data: CreateContinent) => {
-        try {
-            if (selectedContinent) {
-                await updateMutation.mutateAsync({ id: selectedContinent.id, data });
-            } else {
-                await createMutation.mutateAsync(data);
-            }
-            handleCloseModal();
-        } catch (error) {
-            console.error("Error saving continent:", error);
-        }
-    };
-
     return (
         <div className="pb-8 space-y-8">
             {/* Description */}
@@ -118,7 +74,7 @@ export default function ContinentsPage() {
 
                 {/* Mobile: Carrossel */}
                 <div className="md:hidden relative overflow-hidden px-1">
-                    <div 
+                    <div
                         className="flex transition-transform duration-500 ease-out"
                         style={{ transform: `translateX(-${currentStatIndex * 100}%)` }}
                     >
@@ -151,11 +107,10 @@ export default function ContinentsPage() {
                             <button
                                 key={index}
                                 onClick={() => setCurrentStatIndex(index)}
-                                className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                                    index === currentStatIndex 
-                                        ? 'bg-blue-600 w-8' 
+                                className={`w-2 h-2 rounded-full transition-all duration-300 ${index === currentStatIndex
+                                        ? 'bg-blue-600 w-8'
                                         : 'bg-gray-300 dark:bg-gray-700'
-                                }`}
+                                    }`}
                                 aria-label={`Go to stat ${index + 1}`}
                             />
                         ))}
@@ -163,55 +118,6 @@ export default function ContinentsPage() {
                 </div>
             </div>
 
-            {/* Continents Section */}
-            <div>
-                <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-                    See More
-                </h2>
-                <p className="text-sm text-gray-600 dark:text-gray-400 mb-6">
-                    Click on any continent card to explore its countries and cities
-                </p>
-
-                {/* Continents Grid */}
-            {isLoadingContinents ? (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {[...Array(6)].map((_, i) => (
-                        <div
-                            key={i}
-                            className="h-80 bg-gray-200 dark:bg-gray-800 rounded-xl animate-pulse"
-                        />
-                    ))}
-                </div>
-            ) : (
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-                    {continents?.map((continent) => (
-                        <ContinentCard
-                            key={continent.id}
-                            continent={continent}
-                            onEdit={handleOpenEditModal}
-                        />
-                    ))}
-                </div>
-            )}
-            </div>
-
-            {/* Modal */}
-            <ContinentModal
-                isOpen={isModalOpen}
-                onClose={handleCloseModal}
-                onSubmit={handleSubmit}
-                continent={selectedContinent}
-                isLoading={createMutation.isPending || updateMutation.isPending}
-            />
-
-            {/* Floating Action Button (FAB) */}
-            <button
-                onClick={handleOpenCreateModal}
-                className="fixed bottom-8 right-8 w-16 h-16 bg-blue-600 hover:bg-blue-700 text-white rounded-full shadow-2xl hover:shadow-blue-500/50 flex items-center justify-center transition-all duration-300 hover:scale-110 focus:outline-none cursor-pointer z-40 group"
-                aria-label="Create new continent"
-            >
-                <Plus className="w-7 h-7 transition-transform duration-300 group-hover:rotate-90" />
-            </button>
         </div>
     );
 }

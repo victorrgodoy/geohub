@@ -4,7 +4,7 @@ interface Country {
   population: number;
   official_language: string;
   currency: string;
-  continentId: number;
+  continent_id: number;
 }
 
 interface TotalCountry {
