@@ -64,7 +64,7 @@ export class PrismaCountryRepository implements CountryRepository {
       data: {
         cou_name: dto.name,
         cou_population: dto.population,
-        cou_official_language: dto.official_language,
+        cou_official_language: dto.officialLanguage,
         cou_currency: dto.currency,
         con_id: dto.continentId,
       },
@@ -85,7 +85,7 @@ export class PrismaCountryRepository implements CountryRepository {
       data: {
         cou_name: dto.name,
         cou_population: dto.population,
-        cou_official_language: dto.official_language,
+        cou_official_language: dto.officialLanguage,
         cou_currency: dto.currency,
         con_id: dto.continentId,
       },

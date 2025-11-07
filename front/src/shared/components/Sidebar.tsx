@@ -1,5 +1,5 @@
 import { NavLink } from "react-router-dom";
-import { Globe, Menu, Home, Flag } from "lucide-react";
+import { Globe, Menu, Home, Flag, Building2 } from "lucide-react";
 import { useTheme } from "../contexts";
 import { useState, useEffect } from "react";
 
@@ -7,7 +7,6 @@ export default function Sidebar() {
     const { theme, toggleTheme } = useTheme();
     const [isOpen, setIsOpen] = useState(false);
 
-    // Fechar sidebar quando redimensionar para desktop
     useEffect(() => {
         const handleResize = () => {
             if (window.innerWidth >= 1024) {
@@ -21,7 +20,6 @@ export default function Sidebar() {
 
     return (
         <>
-            {/* Mobile Menu Button - só mostra quando fechado */}
             {!isOpen && (
                 <button
                     onClick={() => setIsOpen(true)}
@@ -32,7 +30,6 @@ export default function Sidebar() {
                 </button>
             )}
 
-            {/* Overlay */}
             {isOpen && (
                 <div
                     className="lg:hidden fixed top-0 left-0 right-0 bottom-0 bg-black/50 z-40 animate-fadeIn"
@@ -40,16 +37,13 @@ export default function Sidebar() {
                 />
             )}
 
-            {/* Sidebar */}
             <aside className={`w-64 bg-white h-screen dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col fixed top-0 left-0 z-40 transition-transform duration-500 ease-out lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
-                {/* Header/Logo */}
                 <div className="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-800">
                     <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
                         GeoHub
                     </h1>
                 </div>
 
-                {/* Navigation */}
                 <nav className="flex-1 p-4 space-y-1">
                     <NavLink
                         to="/"
@@ -91,9 +85,21 @@ export default function Sidebar() {
                         <Flag className="w-5 h-5" />
                         <span>Countries</span>
                     </NavLink>
+                    <NavLink
+                        to="/cities"
+                        onClick={() => setIsOpen(false)}
+                        className={({ isActive }) =>
+                            `flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm font-medium transition-colors ${isActive
+                                ? "bg-blue-50 dark:bg-blue-950 text-blue-600 dark:text-blue-400"
+                                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800"
+                            }`
+                        }
+                    >
+                        <Building2 className="w-5 h-5" />
+                        <span>Cities</span>
+                    </NavLink>
                 </nav>
 
-                {/* Footer com switch moderno */}
                 <div className="p-4 border-t border-gray-200 dark:border-gray-800">
                     <div className="flex items-center justify-between px-2 py-1">
                         <span className="text-sm font-medium text-gray-700 dark:text-gray-300">

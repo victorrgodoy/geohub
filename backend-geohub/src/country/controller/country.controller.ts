@@ -9,8 +9,6 @@ import {
   Param,
   Delete,
   Query,
-  ParseBoolPipe,
-  Res,
 } from '@nestjs/common';
 import { CountryService } from '../service/country.service';
 import { CreateCountryDto } from '../dtos/create-country-dto';
@@ -62,7 +60,7 @@ export class CountryController {
   }
 
   @Post()
-  @HttpCode(HttpStatus.ACCEPTED)
+  @HttpCode(HttpStatus.CREATED)
   async create(@Body() country: CreateCountryDto): Promise<ResponseCountryDto> {
     const created = await this.countryService.create(country);
     return new ResponseCountryDto(created)

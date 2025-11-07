@@ -22,15 +22,8 @@ import { ParseIntPipe } from '@nestjs/common';
 export class CityController {
   constructor(private cityService: CityService) {}
 
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  async findById(@Param('id', ParseIntPipe) id: number) {
-    const finded = await this.cityService.findById(id);
-    return new ResponseCityDto(finded);
-  }
-
   @Post()
-  @HttpCode(HttpStatus.ACCEPTED)
+  @HttpCode(HttpStatus.CREATED)
   async create(@Body() city: CreateCityDto): Promise<ResponseCityDto> {
     const created = await this.cityService.create(city);
     return new ResponseCityDto(created);
@@ -42,25 +35,28 @@ export class CityController {
     return await this.cityService.getTotalCity();
   }
 
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  async findById(@Param('id', ParseIntPipe) id: number) {
+    const finded = await this.cityService.findById(id);
+    return new ResponseCityDto(finded);
+  }
+
   @Get()
   @HttpCode(HttpStatus.OK)
   async listAll(
-    @Query('countryName') countryName?: string,
-    @Query('continentName') continentName?: string,
-    @Query('top5', ParseBoolPipe) top5?: boolean,
+    @Query('countryId') countryId?: string,
+    @Query('continentId') continentId?: string,
+    @Query('top5') top5?: string,
   ): Promise<ResponseCityDto[]> {
+    const top5Bool = top5 === 'true';
     let cities: City[];
 
-    if (countryName && continentName) {
-      cities = await this.cityService.findByCountryAndContinent(
-        countryName,
-        continentName,
-      );
-    } else if (countryName) {
-      cities = await this.cityService.findByCountry(countryName);
-    } else if (continentName) {
-      cities = await this.cityService.findByContinent(continentName);
-    } else if (top5) {
+    if (countryId) {
+      cities = await this.cityService.findByCountryId(Number(countryId));
+    } else if (continentId) {
+      cities = await this.cityService.findByContinentId(Number(continentId));
+    } else if (top5Bool) {
       cities = await this.cityService.listTop5ByPopulation();
     } else {
       cities = await this.cityService.listAll();

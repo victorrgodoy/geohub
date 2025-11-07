@@ -13,7 +13,7 @@ export class UpdateCountryDto {
 
   @IsString()
   @IsOptional()
-  official_language?: string;
+  officialLanguage?: string;
 
   @IsString()
   @IsOptional()

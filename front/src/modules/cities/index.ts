@@ -6,3 +6,6 @@ export * from "./services";
 
 // Exporta os hooks públicos do módulo
 export * from "./hooks";
+
+// Exporta os componentes públicos do módulo
+export * from "./components";

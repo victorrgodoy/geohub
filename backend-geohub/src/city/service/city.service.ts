@@ -1,10 +1,8 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, NotFoundException } from '@nestjs/common';
 import { City } from 'generated/prisma';
 import { CreateCityDto } from '../dtos/create-city-dto';
 import { UpdateCityDto } from '../dtos/update-city-dto';
 import { CityRepository } from '../repositories/city-repository';
-import { NotFoundException } from '@nestjs/common';
-import { retry } from 'rxjs';
 
 @Injectable()
 export class CityService {
@@ -18,64 +16,12 @@ export class CityService {
     return await this.cityRepository.getTotalCity();
   }
 
-  public async findByCountry(countryName: string): Promise<City[]> {
-    try {
-      const result = await this.cityRepository.findByCountry(countryName);
-
-      if (!result || result.length === 0) {
-        throw new NotFoundException(
-          `No cities found for country ${countryName}`,
-        );
-      }
-
-      return result;
-    } catch (error) {
-      throw new NotFoundException(
-        `Error fetching cities for country ${countryName}`,
-      );
-    }
+  public async findByCountryId(countryId: number): Promise<City[]> {
+    return await this.cityRepository.findByCountryId(countryId);
   }
 
-  public async findByContinent(continentName: string): Promise<City[]> {
-    try {
-      const result = await this.cityRepository.findByContinent(continentName);
-
-      if (!result || result.length === 0) {
-        throw new NotFoundException(
-          `No cities found for continent ${continentName}`,
-        );
-      }
-
-      return result;
-    } catch (error) {
-      throw new NotFoundException(
-        `Error fetching cities for continent ${continentName}`,
-      );
-    }
-  }
-
-  public async findByCountryAndContinent(
-    countryName: string,
-    continentName: string,
-  ): Promise<City[]> {
-    try {
-      const result = await this.cityRepository.findByCountryAndContinent(
-        countryName,
-        continentName,
-      );
-
-      if (!result || result.length === 0) {
-        throw new NotFoundException(
-          `No cities found for country ${countryName} and continent ${continentName}`,
-        );
-      }
-
-      return result;
-    } catch (error) {
-      throw new NotFoundException(
-        `Error fetching cities for country ${countryName} and continent ${continentName}`,
-      );
-    }
+  public async findByContinentId(continentId: number): Promise<City[]> {
+    return await this.cityRepository.findByContinentId(continentId);
   }
 
   public findById(id: number): Promise<City> {
@@ -90,19 +36,11 @@ export class CityService {
     return this.cityRepository.listAll();
   }
 
-  public async update(id: number, City: UpdateCityDto): Promise<City> {
-    try {
-      return await this.cityRepository.update(id, City);
-    } catch {
-      throw new NotFoundException(`City with id ${id} not found`);
-    }
+  public update(id: number, City: UpdateCityDto): Promise<City> {
+    return this.cityRepository.update(id, City);
   }
 
-  public async delete(id: number): Promise<void> {
-    try {
-      await this.cityRepository.delete(id);
-    } catch {
-      throw new NotFoundException(`City with id ${id} not found`);
-    }
+  public delete(id: number): Promise<void> {
+    return this.cityRepository.delete(id);
   }
 }

@@ -4,6 +4,7 @@ import {
   IsNotEmpty,
   IsNumber,
   Min,
+  Max,
   IsOptional,
 } from 'class-validator';
 
@@ -18,15 +19,19 @@ export class UpdateCityDto {
   @IsOptional()
   population: number;
 
-  @IsNumber({ maxDecimalPlaces: 8 })
+  @IsNumber({ maxDecimalPlaces: 7 })
+  @Min(-90)
+  @Max(90)
   @IsOptional()
   latitude: number;
 
-  @IsNumber({ maxDecimalPlaces: 8 })
+  @IsNumber({ maxDecimalPlaces: 7 })
+  @Min(-180)
+  @Max(180)
   @IsOptional()
   longitude: number;
 
   @IsInt()
   @IsOptional()
-  countryId: number;
+  countryId: number;  
 }

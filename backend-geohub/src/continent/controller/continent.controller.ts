@@ -27,7 +27,7 @@ export class ContinentController {
   }
 
   @Post()
-  @HttpCode(HttpStatus.ACCEPTED)
+  @HttpCode(HttpStatus.CREATED)
   async create(
     @Body() continent: CreateContinentDto,
   ): Promise<ResponseContinentDto> {

@@ -4,16 +4,16 @@ export class ResponseCountryDto {
   id: number;
   name: string;
   population: number;
-  official_language: string;
+  officialLanguage: string;
   currency: string;
-  continent_id: number;
+  continentId: number;
 
   constructor(country: Country) {
     this.id = country.cou_id;
     this.name = country.cou_name;
     this.population = country.cou_population;
-    this.official_language = country.cou_official_language;
+    this.officialLanguage = country.cou_official_language;
     this.currency = country.cou_currency;
-    this.continent_id = country.con_id;
+    this.continentId = country.con_id;
   }
 }

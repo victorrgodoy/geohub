@@ -47,19 +47,11 @@ export class CountryService {
     return this.countryRepository.listAll();
   }
 
-  public async update(id: number, country: UpdateCountryDto): Promise<Country> {
-    try {
-      return await this.countryRepository.update(id, country);
-    } catch {
-      throw new NotFoundException(`Country with id ${id} not found`);
-    }
+  public update(id: number, country: UpdateCountryDto): Promise<Country> {
+    return this.countryRepository.update(id, country);
   }
 
-  public async delete(id: number): Promise<void> {
-    try {
-      await this.countryRepository.delete(id);
-    } catch {
-      throw new NotFoundException(`Country with id ${id} not found`);
-    }
+  public delete(id: number): Promise<void> {
+    return this.countryRepository.delete(id);
   }
 }

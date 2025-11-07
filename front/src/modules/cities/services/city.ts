@@ -6,8 +6,8 @@ const createCity = async (city: CreateCity): Promise<City> => {
   return data;
 };
 
-const listAllCity = async (): Promise<City[]> => {
-  const { data } = await api.get("/city");
+const listAllCity = async (filters?: { countryId?: number; continentId?: number }): Promise<City[]> => {
+  const { data } = await api.get("/city", { params: filters });
   return data || [];
 };
 

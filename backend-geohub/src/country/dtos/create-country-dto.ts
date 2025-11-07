@@ -13,7 +13,7 @@ export class CreateCountryDto {
 
   @IsString()
   @IsNotEmpty()
-  official_language: string;
+  officialLanguage: string;
 
   @IsString()
   @IsNotEmpty()

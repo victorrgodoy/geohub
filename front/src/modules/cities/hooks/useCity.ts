@@ -18,10 +18,11 @@ const useCreateCity = () => {
     });
 };
 
-const useListCity = () => {
+const useListCity = (filters?: { countryId?: number; continentId?: number }) => {
     return useQuery({
-        queryKey: ["cities"],
-        queryFn: listAllCity,
+        queryKey: ["cities", filters],
+        queryFn: () => listAllCity(filters),
+        staleTime: 1000 * 60 * 5, 
     });
 };
 

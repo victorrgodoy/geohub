@@ -6,7 +6,7 @@ export class ResponseCityDto {
   population: number;
   latitude: number;
   longitude: number;
-  country_id: number;
+  countryId: number;
 
   constructor(city: City) {
     this.id = city.cit_id;
@@ -14,6 +14,6 @@ export class ResponseCityDto {
     this.population = city.cit_population;
     this.latitude = city.cit_latitude.toNumber();
     this.longitude = city.cit_longitude.toNumber();
-    this.country_id = city.cou_id;
+    this.countryId = city.cou_id;
   }
 }

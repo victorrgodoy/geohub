@@ -1,4 +1,4 @@
-import { IsInt, IsString, IsNotEmpty, IsNumber, Min } from 'class-validator';
+import { IsInt, IsString, IsNotEmpty, IsNumber, Min, Max } from 'class-validator';
 
 export class CreateCityDto {
   @IsString()
@@ -9,10 +9,14 @@ export class CreateCityDto {
   @Min(0)
   population: number;
 
-  @IsNumber({ maxDecimalPlaces: 8 })
+  @IsNumber({ maxDecimalPlaces: 7 })
+  @Min(-90)
+  @Max(90)
   latitude: number;
 
-  @IsNumber({ maxDecimalPlaces: 8 })
+  @IsNumber({ maxDecimalPlaces: 7 })
+  @Min(-180)
+  @Max(180)
   longitude: number;
 
   @IsInt()

@@ -7,8 +7,9 @@ async function bootstrap() {
   const appContext = await NestFactory.createApplicationContext(AppModule);
   const prisma = appContext.get(PrismaService);
 
+  const REST_COUNTRIES_API = process.env.REST_COUNTRIES_API_URL || 'https://restcountries.com/v3.1';
   const { data: countriesData } = await axios.get(
-    'https://restcountries.com/v3.1/all?fields=name,flags,region,languages,currencies,population,subregion',
+    `${REST_COUNTRIES_API}/all?fields=name,flags,region,languages,currencies,population,subregion`,
   );
 
   for (const c of countriesData) {

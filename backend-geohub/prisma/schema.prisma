@@ -37,8 +37,8 @@ model City {
   cit_id                 Int       @id @default(autoincrement())
   cit_name               String       @unique @db.VarChar(100)
   cit_population         Int
-  cit_latitude           Decimal      @db.Decimal(9,6)  
-  cit_longitude          Decimal      @db.Decimal(9,6)  
+  cit_latitude           Decimal      @db.Decimal(10,7)  
+  cit_longitude          Decimal      @db.Decimal(10,7)  
 
 
   cou_id                 Int

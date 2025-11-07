@@ -4,13 +4,7 @@ import type {
   Country,
   TotalCountry,
   TotalPopulation,
-  Top5Country,
 } from "../types/Country";
-
-const findByContinentId = async (continentId: number): Promise<Country[]> => {
-  const { data } = await api.get(`/country?continentId=${continentId}`);
-  return data;
-};
 
 const createCountry = async (country: CreateCountry): Promise<Country> => {
   const { data } = await api.post("/country", country);
@@ -44,13 +38,12 @@ const totalPopulation = async (): Promise<TotalPopulation> => {
   return data;
 };
 
-const top5Country = async (): Promise<Top5Country[]> => {
+const top5Country = async (): Promise<Country[]> => {
   const { data } = await api.get("country?top5=true");
   return data;
 };
 
 export {
-  findByContinentId,
   createCountry,
   listAllCountry,
   updateCountry,

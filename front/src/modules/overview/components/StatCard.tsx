@@ -20,11 +20,10 @@ const colorClasses = {
 export default function StatCard({ title, value, icon: Icon, color, updatedAt, isLoading }: StatCardProps) {
     const [displayValue, setDisplayValue] = useState(0);
 
-    // Animação de contagem de números
     useEffect(() => {
         if (!value || isLoading) return;
 
-        const duration = 2000; // 2 segundos
+        const duration = 2000;
         const steps = 60;
         const increment = value / steps;
         let current = 0;
@@ -44,7 +43,6 @@ export default function StatCard({ title, value, icon: Icon, color, updatedAt, i
 
     return (
         <div className="group bg-white dark:bg-gray-900 rounded-xl border border-gray-200 dark:border-gray-800 p-6 hover:shadow-lg hover:border-gray-300 dark:hover:border-gray-700 transition-all duration-300 md:hover:scale-[1.02]">
-            {/* Icon and Title */}
             <div className="flex items-center justify-between mb-4">
                 <h3 className="text-sm font-semibold text-gray-600 dark:text-gray-400 uppercase tracking-wide">
                     {title}
@@ -54,7 +52,6 @@ export default function StatCard({ title, value, icon: Icon, color, updatedAt, i
                 </div>
             </div>
 
-            {/* Value */}
             {isLoading ? (
                 <div className="h-10 bg-gray-200 dark:bg-gray-800 rounded animate-pulse" />
             ) : (
@@ -63,7 +60,6 @@ export default function StatCard({ title, value, icon: Icon, color, updatedAt, i
                 </p>
             )}
 
-            {/* Updated At */}
             {updatedAt && (
                 <p className="text-xs text-gray-500 dark:text-gray-500">
                     Updated {formatDate(updatedAt)}

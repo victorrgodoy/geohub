@@ -1,19 +1,11 @@
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import {
-    findByIdContinent,
     createContinent,
     listAllContinent,
     updateContinent,
     deleteContinent,
 } from "../services";
 import type { CreateContinent } from "../types";
-
-const useFindByIdContinent = (id: number) => {
-    return useQuery({
-        queryKey: ["continent", id],
-        queryFn: () => findByIdContinent(id),
-    });
-};
 
 const useCreateContinent = () => {
     const queryClient = useQueryClient();
@@ -58,5 +50,4 @@ export {
     useListContinent,
     useUpdateContinent,
     useDeleteContinent,
-    useFindByIdContinent
 };

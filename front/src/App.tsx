@@ -1,8 +1,9 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./shared/layouts/MainLayout";
 import OverviewPage from "./pages/OverviewPage";
-import ContinentsManagePage from "./pages/ContinentsManagePage";
+import ContinentsPage from "./pages/ContinentsPage";
 import CountriesPage from "./pages/CountriesPage";
+import CitiesPage from "./pages/CitiesPage";
 
 const router = createBrowserRouter([
   {
@@ -15,15 +16,15 @@ const router = createBrowserRouter([
       },
       {
         path: "continents",
-        element: <ContinentsManagePage />,
-      },
-      {
-        path: "continents/:continentId/countries",
-        element: <CountriesPage />,
+        element: <ContinentsPage />,
       },
       {
         path: "countries",
         element: <CountriesPage />,
+      },
+      {
+        path: "cities",
+        element: <CitiesPage />,
       },
     ],
   },

@@ -9,13 +9,8 @@ export abstract class CityRepository {
   abstract update(id: number, update: UpdateCityDto): Promise<City>;
   abstract delete(id: number): Promise<void>;
 
-  abstract findByCountry(countryName: string): Promise<City[]>;
-  abstract findByContinent(continentName: string): Promise<City[]>;
-  abstract findByCountryAndContinent(
-    countryName: string,
-    continentName: string,
-  ): Promise<City[]>;
-
+  abstract findByCountryId(countryId: number): Promise<City[]>;
+  abstract findByContinentId(continentId: number): Promise<City[]>;
   abstract getTotalCity(): Promise<{ total: number; updatedAt: Date | null }>;
   abstract listTop5ByPopulation(): Promise<City[]>;
 }

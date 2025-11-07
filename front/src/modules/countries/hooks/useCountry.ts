@@ -7,17 +7,8 @@ import {
     totalCountry,
     totalPopulation,
     top5Country,
-    findByContinentId
 } from "../services";
 import type { CreateCountry } from "../types";
-
-const useFindByContinentIdCountry = (id: number) => {
-    return useQuery({
-        queryKey: ["continent-countries", id],
-        queryFn: () => findByContinentId(id),
-        enabled: !!id,
-    });
-};
 
 const useCreateCountry = () => {
     const queryClient = useQueryClient();
@@ -79,7 +70,6 @@ const useTop5Country = () => {
 };
 
 export {
-    useFindByContinentIdCountry,
     useCreateCountry,
     useListCountry,
     useUpdateCountry,

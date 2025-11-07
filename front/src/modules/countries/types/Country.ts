@@ -1,29 +1,20 @@
-interface Country {
+export type Country = {
   id: number;
   name: string;
   population: number;
-  official_language: string;
+  officialLanguage: string;
   currency: string;
-  continent_id: number;
-}
-
-interface TotalCountry {
-  total: number;
-  updatedAt: string;
-}
-
-interface TotalPopulation {
-  total: number;
-  updatedAt: string;
-}
-
-type CreateCountry = Omit<Country, "id">;
-type Top5Country = Omit<Country, "id">;
-
-export type {
-  CreateCountry,
-  Country,
-  TotalCountry,
-  TotalPopulation,
-  Top5Country,
+  continentId: number;
 };
+
+export interface TotalCountry {
+  total: number;
+  updatedAt: string;
+}
+
+export interface TotalPopulation {
+  total: number;
+  updatedAt: string;
+}
+
+export type CreateCountry = Omit<Country, "id">;

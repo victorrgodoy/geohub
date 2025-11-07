@@ -30,41 +30,23 @@ export class PrismaCityRepository implements CityRepository {
     };
   }
 
-  async findByCountry(countryName: string): Promise<City[]> {
+  async findByCountryId(countryId: number): Promise<City[]> {
     return await this.prisma.city.findMany({
       where: {
-        country: {
-          cou_name: countryName,
-        },
+        cou_id: countryId,
       },
+      orderBy: { cit_name: 'asc' },
     });
   }
 
-  async findByContinent(continentName: string): Promise<City[]> {
+  async findByContinentId(continentId: number): Promise<City[]> {
     return await this.prisma.city.findMany({
       where: {
         country: {
-          continent: {
-            con_name: continentName,
-          },
+          con_id: continentId,
         },
       },
-    });
-  }
-
-  async findByCountryAndContinent(
-    countryName: string,
-    continentName: string,
-  ): Promise<City[]> {
-    return await this.prisma.city.findMany({
-      where: {
-        country: {
-          cou_name: countryName,
-          continent: {
-            con_name: continentName,
-          },
-        },
-      },
+      orderBy: { cit_name: 'asc' },
     });
   }
 

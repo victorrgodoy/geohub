@@ -1,0 +1,3 @@
+-- AlterTable
+ALTER TABLE "City" ALTER COLUMN "cit_latitude" SET DATA TYPE DECIMAL(10,7),
+ALTER COLUMN "cit_longitude" SET DATA TYPE DECIMAL(10,7);

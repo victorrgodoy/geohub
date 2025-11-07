@@ -1,6 +1,7 @@
-import { X } from "lucide-react";
+import { Globe, X } from "lucide-react";
 import { useEffect, useState } from "react";
 import { createPortal } from "react-dom";
+import { Select } from "../../../shared/components";
 import type { Continent, CreateContinent } from "../types";
 
 interface ContinentModalProps {
@@ -38,7 +39,7 @@ export default function ContinentModal({ isOpen, onClose, onSubmit, continent, i
                 description: "",
             });
         }
-    }, [continent]);
+    }, [continent, isOpen]);
 
     const handleSubmit = (e: React.FormEvent) => {
         e.preventDefault();
@@ -70,20 +71,20 @@ export default function ContinentModal({ isOpen, onClose, onSubmit, continent, i
                         <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                             Continent Name
                         </label>
-                        <select
+                        <Select
                             value={formData.name}
-                            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                            className="w-full px-4 py-2.5 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-700 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent text-gray-900 dark:text-white focus:outline-none cursor-pointer appearance-none bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23666%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] dark:bg-[url('data:image/svg+xml;charset=utf-8,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2224%22%20height%3D%2224%22%20viewBox%3D%220%200%2024%2024%22%20fill%3D%22none%22%20stroke%3D%22%23999%22%20stroke-width%3D%222%22%20stroke-linecap%3D%22round%22%20stroke-linejoin%3D%22round%22%3E%3Cpolyline%20points%3D%226%209%2012%2015%2018%209%22%3E%3C%2Fpolyline%3E%3C%2Fsvg%3E')] bg-no-repeat bg-position-[center_right_0.75rem] pr-10"
-                            required
+                            onChange={(value) => setFormData({ ...formData, name: value })}
+                            options={[
+                                { value: "", label: "Select a continent" },
+                                ...CONTINENTS_OPTIONS.map((cont) => ({
+                                    value: cont,
+                                    label: cont,
+                                })),
+                            ]}
+                            icon={Globe}
                             disabled={!!continent}
-                        >
-                            <option value="" className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white">Select a continent</option>
-                            {CONTINENTS_OPTIONS.map((cont) => (
-                                <option key={cont} value={cont} className="bg-white dark:bg-gray-800 text-gray-900 dark:text-white py-2">
-                                    {cont}
-                                </option>
-                            ))}
-                        </select>
+                            placeholder="Select a continent"
+                        />
                     </div>
 
                     {/* Description */}
