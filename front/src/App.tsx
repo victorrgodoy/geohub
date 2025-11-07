@@ -1,6 +1,6 @@
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import MainLayout from "./shared/layouts/MainLayout";
-import OverviewPage from "./pages/OverviewPage";
+import ContinentsPage from "./pages/ContinentsPage";
 
 const router = createBrowserRouter([
   {
@@ -9,7 +9,7 @@ const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <OverviewPage />,
+        element: <ContinentsPage />,
       },
     ],
   },

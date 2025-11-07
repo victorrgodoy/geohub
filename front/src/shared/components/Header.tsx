@@ -6,9 +6,9 @@ export default function Header() {
 
     // Mapear rotas para nomes de exibição
     const getPageTitle = () => {
-        if (location.pathname === "/") return "Overview";
+        if (location.pathname === "/") return "Continents";
         // Adicionar mais rotas conforme necessário
-        return "Overview";
+        return "Continents";
     };
 
     return (

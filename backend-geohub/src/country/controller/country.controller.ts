@@ -23,15 +23,14 @@ import { ParseIntPipe } from '@nestjs/common';
 export class CountryController {
   constructor(private countryService: CountryService) {}
 
-@Get('stats/total-population')
-@HttpCode(HttpStatus.OK)
-async getTotalPopulation(): Promise<{
-  total: number;
-  updatedAt: Date | null;
-}> {
-  return await this.countryService.getTotalPopulation();
-}
-
+  @Get('stats/total-population')
+  @HttpCode(HttpStatus.OK)
+  async getTotalPopulation(): Promise<{
+    total: number;
+    updatedAt: Date | null;
+  }> {
+    return await this.countryService.getTotalPopulation();
+  }
 
   @Get('stats/total-country')
   @HttpCode(HttpStatus.OK)
@@ -40,20 +39,6 @@ async getTotalPopulation(): Promise<{
     updatedAt: Date | null;
   }> {
     return await this.countryService.getTotalCountry();
-  }
-
-  @Get(':id')
-  @HttpCode(HttpStatus.OK)
-  async findById(@Param('id', ParseIntPipe) id :number){
-    const finded = await this.countryService.findById(id)
-    return new ResponseCountryDto(finded);
-  }
-
-  @Post()
-  @HttpCode(HttpStatus.ACCEPTED)
-  async create(@Body() country: CreateCountryDto): Promise<ResponseCountryDto> {
-    const created = await this.countryService.create(country);
-    return new ResponseCountryDto(created)
   }
 
   @Get()
@@ -74,6 +59,20 @@ async getTotalPopulation(): Promise<{
     }
 
     return countries.map((c) => new ResponseCountryDto(c));
+  }
+
+  @Post()
+  @HttpCode(HttpStatus.ACCEPTED)
+  async create(@Body() country: CreateCountryDto): Promise<ResponseCountryDto> {
+    const created = await this.countryService.create(country);
+    return new ResponseCountryDto(created)
+  }
+
+  @Get(':id')
+  @HttpCode(HttpStatus.OK)
+  async findById(@Param('id', ParseIntPipe) id :number){
+    const finded = await this.countryService.findById(id)
+    return new ResponseCountryDto(finded);
   }
 
   @Put(':id')
