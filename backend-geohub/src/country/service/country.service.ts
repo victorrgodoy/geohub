@@ -47,6 +47,10 @@ export class CountryService {
     return this.countryRepository.listAll();
   }
 
+  public listPaginated(page: number, limit: number): Promise<any> {
+    return this.countryRepository.listPaginated(page, limit);
+  }
+
   public update(id: number, country: UpdateCountryDto): Promise<Country> {
     return this.countryRepository.update(id, country);
   }

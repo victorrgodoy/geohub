@@ -36,6 +36,10 @@ export class CityService {
     return this.cityRepository.listAll();
   }
 
+  public listPaginated(page: number, limit: number): Promise<any> {
+    return this.cityRepository.listPaginated(page, limit);
+  }
+
   public update(id: number, City: UpdateCityDto): Promise<City> {
     return this.cityRepository.update(id, City);
   }

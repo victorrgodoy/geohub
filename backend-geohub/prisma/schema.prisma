@@ -47,3 +47,14 @@ model City {
   createdAt    DateTime  @default(now())
   updatedAt    DateTime  @updatedAt
 }
+
+model User {
+  use_id         Int      @id @default(autoincrement())
+  use_email      String   @unique @db.VarChar(255)
+  use_password   String   @db.VarChar(255)
+  use_name       String   @db.VarChar(100)
+  use_role       String   @default("user") @db.VarChar(20)
+
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+}

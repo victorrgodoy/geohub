@@ -77,18 +77,41 @@ export class PrismaCountryRepository implements CountryRepository {
     });
   }
 
+  async listPaginated(page: number, limit: number): Promise<any> {
+    const skip = (page - 1) * limit;
+
+    const [data, total] = await Promise.all([
+      this.prisma.country.findMany({
+        skip,
+        take: limit,
+        orderBy: { cou_name: 'asc' },
+      }),
+      this.prisma.country.count(),
+    ]);
+
+    return {
+      data,
+      meta: {
+        total,
+        page,
+        limit,
+        totalPages: Math.ceil(total / limit),
+      },
+    };
+  }
+
   async update(id: number, dto: UpdateCountryDto): Promise<Country> {
+    const updateData: any = {};
+    
+    if (dto.name !== undefined) updateData.cou_name = dto.name;
+    if (dto.population !== undefined) updateData.cou_population = dto.population;
+    if (dto.officialLanguage !== undefined) updateData.cou_official_language = dto.officialLanguage;
+    if (dto.currency !== undefined) updateData.cou_currency = dto.currency;
+    if (dto.continentId !== undefined) updateData.con_id = dto.continentId;
+
     return await this.prisma.country.update({
-      where: {
-        cou_id: id,
-      },
-      data: {
-        cou_name: dto.name,
-        cou_population: dto.population,
-        cou_official_language: dto.officialLanguage,
-        cou_currency: dto.currency,
-        con_id: dto.continentId,
-      },
+      where: { cou_id: id },
+      data: updateData,
     });
   }
   async delete(id: number): Promise<void> {

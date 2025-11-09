@@ -48,8 +48,25 @@ export class CityController {
     @Query('countryId') countryId?: string,
     @Query('continentId') continentId?: string,
     @Query('top5') top5?: string,
-  ): Promise<ResponseCityDto[]> {
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
     const top5Bool = top5 === 'true';
+
+    // Se tem paginação, retorna paginado
+    if (page && limit) {
+      const pageNumber = parseInt(page) || 1;
+      const limitNumber = parseInt(limit) || 10;
+      
+      const result = await this.cityService.listPaginated(pageNumber, limitNumber);
+      
+      return {
+        data: result.data.map((c: City) => new ResponseCityDto(c)),
+        meta: result.meta,
+      };
+    }
+
+    // Lógica antiga (sem paginação)
     let cities: City[];
 
     if (countryId) {

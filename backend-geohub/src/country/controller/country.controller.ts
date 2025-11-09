@@ -44,9 +44,24 @@ export class CountryController {
   async list(
     @Query('continentId') continentId?: string,
     @Query('top5') top5?: string,
-  ): Promise<ResponseCountryDto[]> {
-    let countries: Country[];
+    @Query('page') page?: string,
+    @Query('limit') limit?: string,
+  ) {
     const top5Bool = top5 === 'true';
+
+    if (page && limit) {
+      const pageNumber = parseInt(page) || 1;
+      const limitNumber = parseInt(limit) || 10;
+      
+      const result = await this.countryService.listPaginated(pageNumber, limitNumber);
+      
+      return {
+        data: result.data.map((c: Country) => new ResponseCountryDto(c)),
+        meta: result.meta,
+      };
+    }
+
+    let countries: Country[];
 
     if (continentId) {
       countries = await this.countryService.findByContinentId(Number(continentId));
