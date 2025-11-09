@@ -5,6 +5,7 @@ import {
     updateCity,
     deleteCity,
     totalCity,
+    listAllCityPaginated
 } from "../services";
 import type { CreateCity } from "../types";
 
@@ -18,11 +19,23 @@ const useCreateCity = () => {
     });
 };
 
-const useListCity = (filters?: { countryId?: number; continentId?: number }) => {
+const useListPaginatedCities = (
+  page: number,
+  limit: number,
+  searchTerm: string,
+  continentId?: number,
+  countryId?: number
+) => {
+  return useQuery({
+    queryKey: ["cities", { page, limit, searchTerm, continentId, countryId }],
+    queryFn: () => listAllCityPaginated(page, limit, searchTerm, continentId, countryId)
+  });
+};
+
+const useListCity = () => {
     return useQuery({
-        queryKey: ["cities", filters],
-        queryFn: () => listAllCity(filters),
-        staleTime: 1000 * 60 * 5, 
+        queryKey: ["cities"],
+        queryFn: () => listAllCity,
     });
 };
 
@@ -60,4 +73,5 @@ export {
     useUpdateCity,
     useDeleteCity,
     useTotalCity,
+    useListPaginatedCities
 };

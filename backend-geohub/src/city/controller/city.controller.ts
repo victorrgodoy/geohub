@@ -1,16 +1,4 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Get,
-  Put,
-  Param,
-  Delete,
-  Query,
-  ParseBoolPipe,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Param, Delete, Query } from '@nestjs/common';
 import { CityService } from '../service/city.service';
 import { CreateCityDto } from '../dtos/create-city-dto';
 import { ResponseCityDto } from '../dtos/response-city-dto';
@@ -50,30 +38,33 @@ export class CityController {
     @Query('top5') top5?: string,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
+    @Query('search') search?: string,
   ) {
     const top5Bool = top5 === 'true';
 
-    // Se tem paginação, retorna paginado
     if (page && limit) {
       const pageNumber = parseInt(page) || 1;
       const limitNumber = parseInt(limit) || 10;
-      
-      const result = await this.cityService.listPaginated(pageNumber, limitNumber);
-      
+      const continentIdNumber = continentId ? Number(continentId) : undefined;
+      const countryIdNumber = countryId ? Number(countryId) : undefined;
+
+      const result = await this.cityService.listPaginated(
+        pageNumber,
+        limitNumber,
+        search,
+        continentIdNumber,
+        countryIdNumber
+      );
+
       return {
         data: result.data.map((c: City) => new ResponseCityDto(c)),
         meta: result.meta,
       };
     }
 
-    // Lógica antiga (sem paginação)
     let cities: City[];
 
-    if (countryId) {
-      cities = await this.cityService.findByCountryId(Number(countryId));
-    } else if (continentId) {
-      cities = await this.cityService.findByContinentId(Number(continentId));
-    } else if (top5Bool) {
+    if (top5Bool) {
       cities = await this.cityService.listTop5ByPopulation();
     } else {
       cities = await this.cityService.listAll();

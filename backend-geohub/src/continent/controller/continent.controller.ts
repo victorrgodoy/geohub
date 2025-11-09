@@ -1,14 +1,4 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Get,
-  Put,
-  Param,
-  Delete,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Param, Delete} from '@nestjs/common';
 import { ContinentService } from '../service/continent.service';
 import { CreateContinentDto } from '../dtos/create-continent-dto';
 import { UpdateContinentDto } from '../dtos/update-continent-dto';

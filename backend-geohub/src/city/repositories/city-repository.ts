@@ -16,12 +16,15 @@ export abstract class CityRepository {
   abstract findById(id: number): Promise<City>;
   abstract create(create: CreateCityDto): Promise<City>;
   abstract listAll(): Promise<City[]>;
-  abstract listPaginated(page: number, limit: number): Promise<PaginatedResult<City>>;
+  abstract listPaginated(
+    page: number,
+    limit: number,
+    search?: string,
+    continentId?: number,
+    countryId?: number
+  ): Promise<PaginatedResult<City>>;
   abstract update(id: number, update: UpdateCityDto): Promise<City>;
   abstract delete(id: number): Promise<void>;
-
-  abstract findByCountryId(countryId: number): Promise<City[]>;
-  abstract findByContinentId(continentId: number): Promise<City[]>;
   abstract getTotalCity(): Promise<{ total: number; updatedAt: Date | null }>;
   abstract listTop5ByPopulation(): Promise<City[]>;
 }

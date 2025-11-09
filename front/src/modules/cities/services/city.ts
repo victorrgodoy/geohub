@@ -6,9 +6,27 @@ const createCity = async (city: CreateCity): Promise<City> => {
   return data;
 };
 
-const listAllCity = async (filters?: { countryId?: number; continentId?: number }): Promise<City[]> => {
-  const { data } = await api.get("/city", { params: filters });
+const listAllCity = async (): Promise<City[]> => {
+  const { data } = await api.get("/city");
   return data || [];
+};
+
+const listAllCityPaginated = async (
+  page: number,
+  limit: number,
+  searchTerm?: string,
+  continentId?: number,
+  countryId?: number
+): Promise<{
+  data: City[];
+  meta: { total: number; page: number; limit: number; totalPages: number };
+}> => {
+  const params: any = { page, limit };
+  if (searchTerm) params.search = searchTerm;
+  if (continentId) params.continentId = continentId;
+  if (countryId) params.countryId = countryId;
+  const { data } = await api.get("/city", { params });
+  return data;
 };
 
 const updateCity = async (id: number, city: CreateCity): Promise<City> => {
@@ -25,4 +43,4 @@ const totalCity = async (): Promise<TotalCity> => {
   return data;
 };
 
-export { createCity, listAllCity, updateCity, deleteCity, totalCity };
+export { listAllCityPaginated, createCity, listAllCity, updateCity, deleteCity, totalCity };

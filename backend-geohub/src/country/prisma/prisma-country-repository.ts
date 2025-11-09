@@ -43,14 +43,6 @@ export class PrismaCountryRepository implements CountryRepository {
     };
   }
 
-  async findByContinentId(id: number): Promise<Country[]> {
-    return await this.prisma.country.findMany({
-      where: {
-        con_id: id
-      }
-    }) 
-  }
-
   async findById(id: number): Promise<Country> {
     return this.prisma.country.findUniqueOrThrow({
       where: {
@@ -77,16 +69,30 @@ export class PrismaCountryRepository implements CountryRepository {
     });
   }
 
-  async listPaginated(page: number, limit: number): Promise<any> {
+  async listPaginated(
+    page: number,
+    limit: number,
+    search?: string,
+    continentId?: number
+  ): Promise<any> {
     const skip = (page - 1) * limit;
+
+    const where: any = {};
+    if (search) {
+      where.cou_name = { contains: search, mode: 'insensitive' };
+    }
+    if (continentId) {
+      where.con_id = continentId;
+    }
 
     const [data, total] = await Promise.all([
       this.prisma.country.findMany({
         skip,
         take: limit,
         orderBy: { cou_name: 'asc' },
+        where,
       }),
-      this.prisma.country.count(),
+      this.prisma.country.count({ where }),
     ]);
 
     return {

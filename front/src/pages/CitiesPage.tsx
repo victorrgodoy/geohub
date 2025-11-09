@@ -11,7 +11,7 @@ import {
 } from "../shared/components";
 import { useListCountry } from "../modules/countries";
 import { useListContinent } from "../modules/continents";
-import { useListCity, useCreateCity, useUpdateCity, useDeleteCity, CityModal, type City, type CreateCity } from "../modules/cities";
+import { useCreateCity, useUpdateCity, useDeleteCity, CityModal, type City, type CreateCity, useListPaginatedCities } from "../modules/cities";
 import { formatNumber, formatCoordinate } from "../shared/utils";
 
 function CountryName({ countryId }: { countryId: number }) {
@@ -24,23 +24,44 @@ function CountryName({ countryId }: { countryId: number }) {
 
 export default function CitiesPage() {
     const [searchTerm, setSearchTerm] = useState("");
-    const [selectedCountryFilter, setSelectedCountryFilter] = useState<number | undefined>();
-    const [selectedContinentFilter, setSelectedContinentFilter] = useState<number | undefined>();
-    const [currentPage, setCurrentPage] = useState(1);
+    const [selectedCountryFilter, setSelectedCountryFilter] = useState<string>("");
+    const [selectedContinentFilter, setSelectedContinentFilter] = useState<string>("");    
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedCity, setSelectedCity] = useState<City | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    const { data: cities, isLoading } = useListCity({ 
-      countryId: selectedCountryFilter,
-      continentId: selectedContinentFilter 
-    });
+    const continentId = selectedContinentFilter ? Number(selectedContinentFilter) : undefined;
+    const countryId = selectedCountryFilter ? Number(selectedCountryFilter) : undefined;
+
+    const { data: cities, isLoading } = useListPaginatedCities(
+      currentPage,
+      itemsPerPage,
+      searchTerm,
+      continentId,
+      countryId
+    );
     const { data: countries } = useListCountry();
     const { data: continents } = useListContinent();
     const createMutation = useCreateCity();
     const updateMutation = useUpdateCity();
     const deleteMutation = useDeleteCity();
+
+    const handleSearchChange = (value: string) => {
+      setSearchTerm(value);
+      setCurrentPage(1);
+    };
+
+    const handleContinentFilterChange = (value: string) => {
+        setSelectedContinentFilter(value);
+        setCurrentPage(1);
+    };
+
+    const handleCountryFilterChange = (value: string) => {
+      setSelectedCountryFilter(value);
+      setCurrentPage(1);
+    };
 
     const handleCreateOrUpdate = (data: CreateCity) => {
         if (selectedCity) {
@@ -91,39 +112,6 @@ export default function CitiesPage() {
     const handleCloseDeleteModal = () => {
         setIsDeleteModalOpen(false);
         setSelectedCity(null);
-    };
-
-    const filteredCities = cities?.filter((city: City) => {
-        const matchesSearch = city.name.toLowerCase().includes(searchTerm.toLowerCase());
-        return matchesSearch;
-    });
-
-    const totalPages = Math.ceil((filteredCities?.length || 0) / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const paginatedCities = filteredCities?.slice(startIndex, endIndex);
-
-    const handleSearchChange = (value: string) => {
-        setSearchTerm(value);
-        setCurrentPage(1);
-    };
-
-    const handleCountryFilterChange = (value: string) => {
-        const newValue = value ? Number(value) : undefined;
-        setSelectedCountryFilter(newValue);
-        if (newValue) {
-            setSelectedContinentFilter(undefined);
-        }
-        setCurrentPage(1);
-    };
-
-    const handleContinentFilterChange = (value: string) => {
-        const newValue = value ? Number(value) : undefined;
-        setSelectedContinentFilter(newValue);
-        if (newValue) {
-            setSelectedCountryFilter(undefined);
-        }
-        setCurrentPage(1);
     };
 
     const columns: Column<City>[] = [
@@ -247,7 +235,7 @@ export default function CitiesPage() {
             </div>
 
             <DataTable
-                data={paginatedCities}
+                data={cities?.data || []}
                 columns={columns}
                 actions={actions}
                 isLoading={isLoading}
@@ -259,16 +247,16 @@ export default function CitiesPage() {
                 loadingMessage="Loading cities..."
             />
 
-            {filteredCities && filteredCities.length > 0 && (
+            {cities?.meta && cities.meta.total > 0 && (
                 <div className="mt-4">
                     <Pagination
                         currentPage={currentPage}
-                        totalPages={totalPages}
+                        totalPages={cities?.meta?.totalPages || 1}
                         onPageChange={setCurrentPage}
-                        totalItems={filteredCities.length}
-                        startIndex={startIndex}
-                        endIndex={endIndex}
-                        itemName={`cit${filteredCities.length !== 1 ? "ies" : "y"}`}
+                        totalItems={cities?.meta?.total || 0}
+                        startIndex={(cities?.meta?.page - 1) * cities?.meta?.limit}
+                        endIndex={Math.min(cities?.meta?.page * cities?.meta?.limit, cities?.meta?.total)}
+                        itemName={`cit${cities?.meta?.total  !== 1 ? "ies" : "y"}`}
                     />
                 </div>
             )}

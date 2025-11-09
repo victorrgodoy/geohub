@@ -16,6 +16,22 @@ const listAllCountry = async (): Promise<Country[]> => {
   return data || [];
 };
 
+const listAllCountryPaginated = async (
+  page: number,
+  limit: number,
+  searchTerm?: string,
+  continentId?: number
+): Promise<{
+  data: Country[];
+  meta: { total: number; page: number; limit: number; totalPages: number };
+}> => {
+  const params: any = { page, limit };
+  if (searchTerm) params.search = searchTerm; 
+  if (continentId) params.continentId = continentId;
+  const { data } = await api.get("/country", { params });
+  return data;
+};
+
 const updateCountry = async (
   id: number,
   country: CreateCountry,
@@ -51,4 +67,5 @@ export {
   totalCountry,
   totalPopulation,
   top5Country,
+  listAllCountryPaginated
 };

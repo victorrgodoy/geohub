@@ -15,15 +15,7 @@ export class CityService {
   async getTotalCity(): Promise<{ total: number; updatedAt: Date | null }> {
     return await this.cityRepository.getTotalCity();
   }
-
-  public async findByCountryId(countryId: number): Promise<City[]> {
-    return await this.cityRepository.findByCountryId(countryId);
-  }
-
-  public async findByContinentId(continentId: number): Promise<City[]> {
-    return await this.cityRepository.findByContinentId(continentId);
-  }
-
+  
   public findById(id: number): Promise<City> {
     return this.cityRepository.findById(id);
   }
@@ -36,8 +28,14 @@ export class CityService {
     return this.cityRepository.listAll();
   }
 
-  public listPaginated(page: number, limit: number): Promise<any> {
-    return this.cityRepository.listPaginated(page, limit);
+  public listPaginated(
+    page: number,
+    limit: number,
+    search?: string,
+    continentId?: number,
+    countryId?: number
+  ): Promise<any> {
+    return this.cityRepository.listPaginated(page, limit, search, continentId, countryId);
   }
 
   public update(id: number, City: UpdateCityDto): Promise<City> {

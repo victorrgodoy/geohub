@@ -5,10 +5,10 @@ import {
     useListContinent,
 } from "../modules/continents";
 import {
-    useListCountry,
     useCreateCountry,
     useUpdateCountry,
     useDeleteCountry,
+    useListPaginatedCountries,
     CountryModal,
     type Country,
     type CreateCountry,
@@ -26,17 +26,33 @@ function ContinentName({ continentId }: { continentId: number }) {
 export default function CountriesPage() {
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedContinentFilter, setSelectedContinentFilter] = useState<string>("");
-    const [currentPage, setCurrentPage] = useState(1);
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
+    const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPage = 10;
 
-    const { data: allCountries, isLoading } = useListCountry();
+    const continentId = selectedContinentFilter ? Number(selectedContinentFilter) : undefined;
+    const { data: countries, isLoading } = useListPaginatedCountries(
+      currentPage,
+      itemsPerPage,
+      searchTerm,
+      continentId
+    );
     const { data: continents } = useListContinent();
     const createMutation = useCreateCountry();
     const updateMutation = useUpdateCountry();
     const deleteMutation = useDeleteCountry();
+
+    const handleSearchChange = (value: string) => {
+      setSearchTerm(value);
+      setCurrentPage(1);
+    };
+
+    const handleContinentFilterChange = (value: string) => {
+        setSelectedContinentFilter(value);
+        setCurrentPage(1);
+    };
 
     const handleCreateOrUpdate = (data: CreateCountry) => {
         if (selectedCountry) {
@@ -87,27 +103,6 @@ export default function CountriesPage() {
     const handleCloseDeleteModal = () => {
         setIsDeleteModalOpen(false);
         setSelectedCountry(null);
-    };
-
-    const filteredCountries = allCountries?.filter((country: Country) => {
-        const matchesSearch = country.name.toLowerCase().includes(searchTerm.toLowerCase());
-        const matchesContinent = !selectedContinentFilter || country.continentId === Number(selectedContinentFilter);
-        return matchesSearch && matchesContinent;
-    });
-
-    const totalPages = Math.ceil((filteredCountries?.length || 0) / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const paginatedCountries = filteredCountries?.slice(startIndex, endIndex);
-
-    const handleSearchChange = (value: string) => {
-        setSearchTerm(value);
-        setCurrentPage(1);
-    };
-
-    const handleContinentFilterChange = (value: string) => {
-        setSelectedContinentFilter(value);
-        setCurrentPage(1);
     };
 
     const columns: Column<Country>[] = [
@@ -230,7 +225,7 @@ export default function CountriesPage() {
             </div>
 
             <DataTable
-                data={paginatedCountries}
+                data={countries?.data || []}
                 columns={columns}
                 actions={actions}
                 isLoading={isLoading}
@@ -242,16 +237,16 @@ export default function CountriesPage() {
                 loadingMessage="Loading countries..."
             />
 
-            {filteredCountries && filteredCountries.length > 0 && (
+            {countries?.meta && countries.meta.total > 0 && (
                 <div className="mt-4">
                     <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
+                        currentPage={countries?.meta?.page || 1}
+                        totalPages={countries?.meta?.totalPages || 1}
                         onPageChange={setCurrentPage}
-                        totalItems={filteredCountries.length}
-                        startIndex={startIndex}
-                        endIndex={endIndex}
-                        itemName={`countr${filteredCountries.length !== 1 ? "ies" : "y"}`}
+                        totalItems={countries?.meta?.total || 0}
+                        startIndex={(countries?.meta?.page - 1) * countries?.meta?.limit}
+                        endIndex={Math.min(countries?.meta?.page * countries?.meta?.limit, countries?.meta?.total)}
+                        itemName={`countr${countries?.meta?.total !== 1 ? "ies" : "y"}`}
                     />
                 </div>
             )}

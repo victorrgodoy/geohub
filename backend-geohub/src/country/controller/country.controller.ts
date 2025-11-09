@@ -1,15 +1,4 @@
-import {
-  Body,
-  Controller,
-  HttpCode,
-  HttpStatus,
-  Post,
-  Get,
-  Put,
-  Param,
-  Delete,
-  Query,
-} from '@nestjs/common';
+import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Param, Delete, Query, UseGuards } from '@nestjs/common';
 import { CountryService } from '../service/country.service';
 import { CreateCountryDto } from '../dtos/create-country-dto';
 import { UpdateCountryDto } from '../dtos/update-country-dto';
@@ -46,15 +35,22 @@ export class CountryController {
     @Query('top5') top5?: string,
     @Query('page') page?: string,
     @Query('limit') limit?: string,
+    @Query('search') search?: string,
   ) {
     const top5Bool = top5 === 'true';
 
     if (page && limit) {
       const pageNumber = parseInt(page) || 1;
       const limitNumber = parseInt(limit) || 10;
-      
-      const result = await this.countryService.listPaginated(pageNumber, limitNumber);
-      
+      const continentIdNumber = continentId ? Number(continentId) : undefined;
+
+      const result = await this.countryService.listPaginated(
+        pageNumber,
+        limitNumber,
+        search,
+        continentIdNumber
+      );
+
       return {
         data: result.data.map((c: Country) => new ResponseCountryDto(c)),
         meta: result.meta,
@@ -63,14 +59,11 @@ export class CountryController {
 
     let countries: Country[];
 
-    if (continentId) {
-      countries = await this.countryService.findByContinentId(Number(continentId));
-    } else if (top5Bool) {
+    if (top5Bool) {
       countries = await this.countryService.listTop5ByPopulation();
     } else {
       countries = await this.countryService.listAll();
     }
-
     return countries.map((c) => new ResponseCountryDto(c));
   }
 

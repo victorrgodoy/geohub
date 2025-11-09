@@ -8,7 +8,7 @@ import CitiesPage from "./pages/CitiesPage";
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <MainLayout />,
+    element: <MainLayout />, 
     children: [
       {
         index: true,

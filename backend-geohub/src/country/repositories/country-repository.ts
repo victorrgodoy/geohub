@@ -16,11 +16,15 @@ export abstract class CountryRepository {
   abstract findById(id: number): Promise<Country>;
   abstract create(create: CreateCountryDto): Promise<Country>;
   abstract listAll(): Promise<Country[]>;
-  abstract listPaginated(page: number, limit: number): Promise<PaginatedResult<Country>>;
+  abstract listPaginated(
+    page: number,
+    limit: number,
+    search?: string,
+    continentId?: number
+  ): Promise<PaginatedResult<Country>>;
   abstract update(id: number, update: UpdateCountryDto): Promise<Country>;
   abstract delete(id: number): Promise<void>;
 
-  abstract findByContinentId(id: number): Promise<Country[]>;
   abstract getTotalPopulation(): Promise<{
     total: number;
     updatedAt: Date | null;

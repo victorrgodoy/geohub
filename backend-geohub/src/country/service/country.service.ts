@@ -3,7 +3,6 @@ import { Country } from 'generated/prisma';
 import { CreateCountryDto } from '../dtos/create-country-dto';
 import { UpdateCountryDto } from '../dtos/update-country-dto';
 import { CountryRepository } from '../repositories/country-repository';
-import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class CountryService {
@@ -24,17 +23,6 @@ export class CountryService {
     return await this.countryRepository.getTotalPopulation();
   }
 
-  public async findByContinentId(id: number): Promise<Country[]> {
-    const countries =
-      await this.countryRepository.findByContinentId(id);
-    if (!countries || countries.length === 0) {
-      throw new NotFoundException(
-        `No countries found for continent with ID: ${id}`,
-      );
-    }
-    return countries;
-  }
-
   public findById(id: number): Promise<Country> {
     return this.countryRepository.findById(id);
   }
@@ -47,8 +35,13 @@ export class CountryService {
     return this.countryRepository.listAll();
   }
 
-  public listPaginated(page: number, limit: number): Promise<any> {
-    return this.countryRepository.listPaginated(page, limit);
+  public listPaginated(
+    page: number,
+    limit: number,
+    search?: string,
+    continentId?: number
+  ): Promise<any> {
+    return this.countryRepository.listPaginated(page, limit, search, continentId);
   }
 
   public update(id: number, country: UpdateCountryDto): Promise<Country> {

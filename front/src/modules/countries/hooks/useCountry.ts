@@ -7,8 +7,16 @@ import {
     totalCountry,
     totalPopulation,
     top5Country,
+    listAllCountryPaginated
 } from "../services";
 import type { CreateCountry } from "../types";
+
+const useListPaginatedCountries = (page: number, limit: number, searchTerm?: string, continentId?: number) => {
+    return useQuery({
+        queryKey: ["countries", { page, limit, searchTerm, continentId }],
+        queryFn: () => listAllCountryPaginated(page, limit, searchTerm, continentId),
+    });
+};
 
 const useCreateCountry = () => {
     const queryClient = useQueryClient();
@@ -77,4 +85,5 @@ export {
     useTotalCountry,
     useTotalPopulation,
     useTop5Country,
+    useListPaginatedCountries
 };

@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Plus, Edit, Trash2, Globe } from "lucide-react";
-import { DataTable, Pagination, SearchInput, ConfirmationModal, type Column, type Action } from "../shared/components";
+import { DataTable, SearchInput, ConfirmationModal, type Column, type Action } from "../shared/components";
 import {
     useListContinent,
     useCreateContinent,
@@ -21,18 +21,16 @@ export default function ContinentsPage() {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedContinent, setSelectedContinent] = useState<Continent | null>(null);
     const [searchTerm, setSearchTerm] = useState("");
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
 
     const filteredContinents = continents?.filter((continent) =>
         continent.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
         continent.description.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
-    const totalPages = Math.ceil((filteredContinents?.length || 0) / itemsPerPage);
-    const startIndex = (currentPage - 1) * itemsPerPage;
-    const endIndex = startIndex + itemsPerPage;
-    const paginatedContinents = filteredContinents?.slice(startIndex, endIndex);
+
+    const handleSearchChange = (value: string) => {
+      setSearchTerm(value);
+    };
 
     const handleOpenCreateModal = () => {
         setSelectedContinent(null);
@@ -84,10 +82,6 @@ export default function ContinentsPage() {
         setSelectedContinent(null);
     };
 
-    const handleSearchChange = (value: string) => {
-        setSearchTerm(value);
-        setCurrentPage(1);
-    };
 
     const columns: Column<Continent>[] = [
         {
@@ -163,7 +157,7 @@ export default function ContinentsPage() {
             </div>
 
             <DataTable
-                data={paginatedContinents}
+                data={filteredContinents}
                 columns={columns}
                 actions={actions}
                 isLoading={isLoading}
@@ -174,20 +168,6 @@ export default function ContinentsPage() {
                 }
                 loadingMessage="Loading continents..."
             />
-
-            {filteredContinents && filteredContinents.length > 0 && (
-                <div className="mt-4">
-                    <Pagination
-                        currentPage={currentPage}
-                        totalPages={totalPages}
-                        onPageChange={setCurrentPage}
-                        totalItems={filteredContinents.length}
-                        startIndex={startIndex}
-                        endIndex={endIndex}
-                        itemName={`continent${filteredContinents.length !== 1 ? "s" : ""}`}
-                    />
-                </div>
-            )}
 
             {/* Modal */}
             <ContinentModal

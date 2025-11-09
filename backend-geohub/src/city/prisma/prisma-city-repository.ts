@@ -76,16 +76,34 @@ export class PrismaCityRepository implements CityRepository {
     });
   }
 
-  async listPaginated(page: number, limit: number): Promise<any> {
+  async listPaginated(
+    page: number,
+    limit: number,
+    search?: string,
+    continentId?: number,
+    countryId?: number
+  ): Promise<any> {
     const skip = (page - 1) * limit;
+
+    const where: any = {};
+    if (search) {
+      where.cit_name = { contains: search, mode: 'insensitive' };
+    }
+    if (continentId) {
+      where.country = { con_id: continentId };
+    }
+    if (countryId) {
+      where.cou_id = countryId;
+    }
 
     const [data, total] = await Promise.all([
       this.prisma.city.findMany({
         skip,
         take: limit,
         orderBy: { cit_name: 'asc' },
+        where,
       }),
-      this.prisma.city.count(),
+      this.prisma.city.count({ where }),
     ]);
 
     return {
