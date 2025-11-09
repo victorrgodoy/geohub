@@ -1,10 +1,11 @@
 # GeoHub Backend
 
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+<a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
 
-API REST desenvolvida com **NestJS**, **Prisma ORM** e **PostgreSQL** para gerenciamento de dados geográficos com integração à REST Countries API.</p> 
+API REST para gerenciamento de dados geográficos com integração à REST Countries API.</p>
 
 ## Boas Práticas Utilizadas no Projeto
+
 - **Separação de camadas:** O projeto segue a arquitetura de camadas, separando responsabilidades em Repository, Service e Controller.
 - **Módulos separados:** Cada domínio (ex: user, country, city, continent, auth) possui seu próprio módulo, facilitando manutenção e escalabilidade.
 - **Seeds implementados:** Scripts de seed para popular o banco de dados em ambiente de desenvolvimento, incluindo usuários, países, cidades e continentes.
@@ -20,10 +21,9 @@ API REST desenvolvida com **NestJS**, **Prisma ORM** e **PostgreSQL** para geren
 
 - **TypeScript** - Superset JavaScript com tipagem estática
 
-
 ## Estrutura do Projeto
 
-```bash
+````bash
 
 ├── prisma/
 
@@ -67,10 +67,10 @@ API REST desenvolvida com **NestJS**, **Prisma ORM** e **PostgreSQL** para geren
 
 │       ├── seed-city-manual.ts
 
-```
+````
+
 ## Recursos
 
 - [NestJS Documentation](https://docs.nestjs.com/)
 - [Prisma Documentation](https://www.prisma.io/docs/)
 - [REST Countries API](https://restcountries.com/)
-

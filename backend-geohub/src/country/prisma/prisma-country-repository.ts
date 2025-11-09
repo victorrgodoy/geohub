@@ -1,9 +1,10 @@
-import { Country } from 'generated/prisma';
+import { Country, Prisma } from 'generated/prisma';
 import { CountryRepository } from '../repositories/country-repository';
 import { CreateCountryDto } from '../dtos/create-country-dto';
 import { UpdateCountryDto } from '../dtos/update-country-dto';
 import { PrismaService } from 'src/database/prisma.service';
 import { Injectable } from '@nestjs/common';
+import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 
 @Injectable()
 export class PrismaCountryRepository implements CountryRepository {
@@ -73,11 +74,11 @@ export class PrismaCountryRepository implements CountryRepository {
     page: number,
     limit: number,
     search?: string,
-    continentId?: number
-  ): Promise<any> {
+    continentId?: number,
+  ): Promise<PaginatedResult<Country>> {
     const skip = (page - 1) * limit;
+    const where: Prisma.CountryWhereInput = {};
 
-    const where: any = {};
     if (search) {
       where.cou_name = { contains: search, mode: 'insensitive' };
     }
@@ -107,19 +108,23 @@ export class PrismaCountryRepository implements CountryRepository {
   }
 
   async update(id: number, dto: UpdateCountryDto): Promise<Country> {
-    const updateData: any = {};
-    
+    const updateData: Prisma.CountryUpdateInput = {};
     if (dto.name !== undefined) updateData.cou_name = dto.name;
-    if (dto.population !== undefined) updateData.cou_population = dto.population;
-    if (dto.officialLanguage !== undefined) updateData.cou_official_language = dto.officialLanguage;
+    if (dto.population !== undefined)
+      updateData.cou_population = dto.population;
+    if (dto.officialLanguage !== undefined)
+      updateData.cou_official_language = dto.officialLanguage;
     if (dto.currency !== undefined) updateData.cou_currency = dto.currency;
-    if (dto.continentId !== undefined) updateData.con_id = dto.continentId;
+    if (dto.continentId !== undefined) {
+      updateData.continent = { connect: { con_id: dto.continentId } };
+    }
 
     return await this.prisma.country.update({
       where: { cou_id: id },
       data: updateData,
     });
   }
+
   async delete(id: number): Promise<void> {
     await this.prisma.country.delete({
       where: {

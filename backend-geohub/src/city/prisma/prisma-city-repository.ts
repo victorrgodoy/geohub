@@ -81,7 +81,7 @@ export class PrismaCityRepository implements CityRepository {
     limit: number,
     search?: string,
     continentId?: number,
-    countryId?: number
+    countryId?: number,
   ): Promise<any> {
     const skip = (page - 1) * limit;
 
@@ -119,9 +119,10 @@ export class PrismaCityRepository implements CityRepository {
 
   async update(id: number, dto: UpdateCityDto): Promise<City> {
     const updateData: any = {};
-    
+
     if (dto.name !== undefined) updateData.cit_name = dto.name;
-    if (dto.population !== undefined) updateData.cit_population = dto.population;
+    if (dto.population !== undefined)
+      updateData.cit_population = dto.population;
     if (dto.latitude !== undefined) updateData.cit_latitude = dto.latitude;
     if (dto.longitude !== undefined) updateData.cit_longitude = dto.longitude;
     if (dto.countryId !== undefined) updateData.cou_id = dto.countryId;

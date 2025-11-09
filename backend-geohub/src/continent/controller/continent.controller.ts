@@ -1,4 +1,14 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Param, Delete} from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Get,
+  Put,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { ContinentService } from '../service/continent.service';
 import { CreateContinentDto } from '../dtos/create-continent-dto';
 import { UpdateContinentDto } from '../dtos/update-continent-dto';
@@ -22,7 +32,7 @@ export class ContinentController {
     @Body() continent: CreateContinentDto,
   ): Promise<ResponseContinentDto> {
     const created = await this.continentService.create(continent);
-    return new ResponseContinentDto(created)
+    return new ResponseContinentDto(created);
   }
 
   @Get()

@@ -15,7 +15,7 @@ export class CityService {
   async getTotalCity(): Promise<{ total: number; updatedAt: Date | null }> {
     return await this.cityRepository.getTotalCity();
   }
-  
+
   public findById(id: number): Promise<City> {
     return this.cityRepository.findById(id);
   }
@@ -33,9 +33,15 @@ export class CityService {
     limit: number,
     search?: string,
     continentId?: number,
-    countryId?: number
+    countryId?: number,
   ): Promise<any> {
-    return this.cityRepository.listPaginated(page, limit, search, continentId, countryId);
+    return this.cityRepository.listPaginated(
+      page,
+      limit,
+      search,
+      continentId,
+      countryId,
+    );
   }
 
   public update(id: number, City: UpdateCityDto): Promise<City> {

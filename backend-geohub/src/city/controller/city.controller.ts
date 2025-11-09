@@ -1,4 +1,15 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Param, Delete, Query } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Get,
+  Put,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { CityService } from '../service/city.service';
 import { CreateCityDto } from '../dtos/create-city-dto';
 import { ResponseCityDto } from '../dtos/response-city-dto';
@@ -53,7 +64,7 @@ export class CityController {
         limitNumber,
         search,
         continentIdNumber,
-        countryIdNumber
+        countryIdNumber,
       );
 
       return {

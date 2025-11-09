@@ -33,16 +33,17 @@ export class PrismaContinentRepository implements ContinentRepository {
   }
 
   async update(id: number, dto: UpdateContinentDto): Promise<Continent> {
-    const updateData: any = {};
-    
+    const updateData: { con_name?: string; con_description?: string } = {};
     if (dto.name !== undefined) updateData.con_name = dto.name;
-    if (dto.description !== undefined) updateData.con_description = dto.description;
+    if (dto.description !== undefined)
+      updateData.con_description = dto.description;
 
     return await this.prisma.continent.update({
       where: { con_id: id },
       data: updateData,
     });
   }
+
   async delete(id: number): Promise<void> {
     await this.prisma.continent.delete({
       where: {

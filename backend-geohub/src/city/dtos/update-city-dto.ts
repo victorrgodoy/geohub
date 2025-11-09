@@ -33,5 +33,5 @@ export class UpdateCityDto {
 
   @IsInt()
   @IsOptional()
-  countryId: number;  
+  countryId: number;
 }

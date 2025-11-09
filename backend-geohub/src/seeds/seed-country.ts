@@ -1,41 +1,37 @@
 import { NestFactory } from '@nestjs/core';
 import { AppModule } from '../app.module';
 import { PrismaService } from '../database/prisma.service';
-import axios from 'axios';
+import { fetchCountriesData } from './data/data-country-api';
 
 async function bootstrap() {
   const appContext = await NestFactory.createApplicationContext(AppModule);
   const prisma = appContext.get(PrismaService);
+  const countries = await fetchCountriesData();
 
-  const REST_COUNTRIES_API = process.env.REST_COUNTRIES_API_URL || 'https://restcountries.com/v3.1';
-  const { data: countriesData } = await axios.get(
-    `${REST_COUNTRIES_API}/all?fields=name,flags,region,languages,currencies,population,subregion`,
-  );
-
-  for (const c of countriesData) {
+  for (const countryData of countries) {
     const continent = await prisma.continent.findFirst({
-      where: { con_name: c.region },
+      where: { con_name: countryData.region },
     });
 
     if (!continent) {
-      console.warn(`Continent not found for ${c.name.common}!`);
+      console.warn(`Continent not found for ${countryData.name.common}!`);
       continue;
     }
 
-
     await prisma.country.upsert({
-      where: { cou_name: c.name.common }, 
+      where: { cou_name: countryData.name.common },
       update: {},
       create: {
-        cou_name: c.name.common,
-        cou_population: c.population,
-        cou_official_language: String(Object.values(c.languages || {})[0] || ''),
-        cou_currency: Object.keys(c.currencies || {})[0] || '',
+        cou_name: countryData.name.common,
+        cou_population: countryData.population,
+        cou_official_language: String(
+          Object.values(countryData.languages || {})[0] || '',
+        ),
+        cou_currency: Object.keys(countryData.currencies || {})[0] || '',
         con_id: continent.con_id,
       },
     });
   }
-
   console.log('Imported countries successfully!');
   await appContext.close();
 }

@@ -1,16 +1,7 @@
 import { Country } from 'generated/prisma';
 import { CreateCountryDto } from '../dtos/create-country-dto';
 import { UpdateCountryDto } from '../dtos/update-country-dto';
-
-export interface PaginatedResult<T> {
-  data: T[];
-  meta: {
-    total: number;
-    page: number;
-    limit: number;
-    totalPages: number;
-  };
-}
+import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 
 export abstract class CountryRepository {
   abstract findById(id: number): Promise<Country>;
@@ -20,11 +11,10 @@ export abstract class CountryRepository {
     page: number,
     limit: number,
     search?: string,
-    continentId?: number
+    continentId?: number,
   ): Promise<PaginatedResult<Country>>;
   abstract update(id: number, update: UpdateCountryDto): Promise<Country>;
   abstract delete(id: number): Promise<void>;
-
   abstract getTotalPopulation(): Promise<{
     total: number;
     updatedAt: Date | null;

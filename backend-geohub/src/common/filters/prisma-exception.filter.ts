@@ -17,11 +17,11 @@ export class PrismaExceptionFilter implements ExceptionFilter {
     let message = 'Internal server error';
 
     switch (exception.code) {
-      case 'P2002': 
+      case 'P2002':
         status = HttpStatus.CONFLICT;
         message = `A record with this ${exception.meta?.target} already exists`;
         break;
-      case 'P2025': 
+      case 'P2025':
         status = HttpStatus.NOT_FOUND;
         message = 'Record not found';
         break;

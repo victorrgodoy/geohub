@@ -21,7 +21,7 @@ export abstract class CityRepository {
     limit: number,
     search?: string,
     continentId?: number,
-    countryId?: number
+    countryId?: number,
   ): Promise<PaginatedResult<City>>;
   abstract update(id: number, update: UpdateCityDto): Promise<City>;
   abstract delete(id: number): Promise<void>;

@@ -1,10 +1,22 @@
-import { Body, Controller, HttpCode, HttpStatus, Post, Get, Put, Param, Delete, Query, UseGuards } from '@nestjs/common';
+import {
+  Body,
+  Controller,
+  HttpCode,
+  HttpStatus,
+  Post,
+  Get,
+  Put,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
 import { CountryService } from '../service/country.service';
 import { CreateCountryDto } from '../dtos/create-country-dto';
 import { UpdateCountryDto } from '../dtos/update-country-dto';
 import { ResponseCountryDto } from '../dtos/response-country-dto';
 import { Country } from 'generated/prisma';
 import { ParseIntPipe } from '@nestjs/common';
+import { PaginatedResult } from '../common/interfaces/paginated-result.interface';
 
 @Controller('/country')
 export class CountryController {
@@ -37,33 +49,29 @@ export class CountryController {
     @Query('limit') limit?: string,
     @Query('search') search?: string,
   ) {
-    const top5Bool = top5 === 'true';
-
     if (page && limit) {
-      const pageNumber = parseInt(page) || 1;
-      const limitNumber = parseInt(limit) || 10;
+      const pageNumber = Number(page) || 1;
+      const limitNumber = Number(limit) || 10;
       const continentIdNumber = continentId ? Number(continentId) : undefined;
 
-      const result = await this.countryService.listPaginated(
-        pageNumber,
-        limitNumber,
-        search,
-        continentIdNumber
-      );
+      const result: PaginatedResult<Country> =
+        await this.countryService.listPaginated(
+          pageNumber,
+          limitNumber,
+          search,
+          continentIdNumber,
+        );
 
       return {
-        data: result.data.map((c: Country) => new ResponseCountryDto(c)),
+        data: result.data.map((c) => new ResponseCountryDto(c)),
         meta: result.meta,
       };
     }
-
-    let countries: Country[];
-
-    if (top5Bool) {
-      countries = await this.countryService.listTop5ByPopulation();
-    } else {
-      countries = await this.countryService.listAll();
+    if (top5 === 'true') {
+      const countries = await this.countryService.listTop5ByPopulation();
+      return countries.map((c) => new ResponseCountryDto(c));
     }
+    const countries = await this.countryService.listAll();
     return countries.map((c) => new ResponseCountryDto(c));
   }
 
@@ -71,13 +79,13 @@ export class CountryController {
   @HttpCode(HttpStatus.CREATED)
   async create(@Body() country: CreateCountryDto): Promise<ResponseCountryDto> {
     const created = await this.countryService.create(country);
-    return new ResponseCountryDto(created)
+    return new ResponseCountryDto(created);
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  async findById(@Param('id', ParseIntPipe) id :number){
-    const finded = await this.countryService.findById(id)
+  async findById(@Param('id', ParseIntPipe) id: number) {
+    const finded = await this.countryService.findById(id);
     return new ResponseCountryDto(finded);
   }
 
@@ -88,7 +96,7 @@ export class CountryController {
     @Body() country: UpdateCountryDto,
   ): Promise<ResponseCountryDto> {
     const edited = await this.countryService.update(id, country);
-    return new ResponseCountryDto(edited)
+    return new ResponseCountryDto(edited);
   }
 
   @Delete(':id')

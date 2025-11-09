@@ -1,4 +1,11 @@
-import { IsInt, IsString, IsNotEmpty, IsNumber, Min, Max } from 'class-validator';
+import {
+  IsInt,
+  IsString,
+  IsNotEmpty,
+  IsNumber,
+  Min,
+  Max,
+} from 'class-validator';
 
 export class CreateCityDto {
   @IsString()
