@@ -1,61 +1,56 @@
 # GeoHub - Arquitetura Modular
 
-## Estrutura do Projeto
+### 📁 Estrutura do Projeto
 
+```bash
+front/
+├── public/
+│   └── images/
+│       └── continents/         # Imagens dos continentes
+├── src/
+│   ├── App.tsx                 # Configuração de rotas
+│   ├── main.tsx                # Ponto de entrada
+│   ├── index.css               # Estilos globais
+│   ├── modules/
+│   │   ├── cities/             # Módulo de cidades
+│   │   │   ├── components/
+│   │   │   ├── hooks/
+│   │   │   ├── services/
+│   │   │   └── types/
+│   │   ├── continents/         # Módulo de continentes
+│   │   ├── countries/          # Módulo de países
+│   │   ├── overview/           # Módulo de dashboard
+│   │   │   └── components/
+│   │   │       ├── StatCard.tsx
+│   │   │       └── GlobalInsightsCard.tsx
+│   │   └── worldbank/          # Integração World Bank API
+│   │       ├── hooks/
+│   │       ├── services/
+│   │       └── types/
+│   ├── pages/
+│   │   ├── OverviewPage.tsx    # Dashboard principal
+│   │   ├── ContinentsPage.tsx  # CRUD de continentes
+│   │   ├── CountriesPage.tsx   # CRUD de países
+│   │   └── CitiesPage.tsx      # CRUD de cidades
+│   ├── shared/
+│   │   ├── components/         # Componentes reutilizáveis
+│   │   │   ├── DataTable.tsx
+│   │   │   ├── Pagination.tsx
+│   │   │   ├── Select.tsx
+│   │   │   ├── SearchInput.tsx
+│   │   │   ├── ConfirmationModal.tsx
+│   │   │   ├── DataSourceInfo.tsx
+│   │   │   ├── Header.tsx
+│   │   │   └── Sidebar.tsx
+│   │   ├── contexts/           # Contextos globais
+│   │   ├── layouts/            # Layouts da aplicação
+│   │   │   └── MainLayout.tsx
+│   │   ├── services/           # Serviços da aplicação
+│   │   │   └── api.ts          # Configuração Axios
+│   │   └── utils/              # Funções utilitárias
+│   │       ├── formatNumber.ts
+│   │       └── formatDate.ts
+│   ├── tailwind.config.js
+│   ├── vite.config.ts
+│   └── tsconfig.json
 ```
-src/
-├── modules/              # Módulos da aplicação (feature-based)
-│   ├── continents/       # Módulo de continentes
-│   ├── countries/        # Módulo de países
-│   └── cities/           # Módulo de cidades
-│
-├── shared/               # Código compartilhado
-│   ├── components/       # Componentes UI reutilizáveis
-│   ├── services/         # Serviços base (axios config)
-│   ├── hooks/            # Hooks genéricos
-│   └── utils/            # Funções utilitárias
-│
-└── pages/                # Páginas/rotas da aplicação
-```
-
-## Princípios da Arquitetura
-
-### 1. Modularização por Feature
-Cada módulo é independente e contém:
-- **types/** - Tipos TypeScript
-- **services/** - Lógica de API
-- **components/** - Componentes React específicos
-- **hooks/** - Hooks customizados
-- **index.ts** - Barrel export (API pública do módulo)
-
-### 2. Separação de Responsabilidades
-- **Módulos** = Features específicas (continents, countries, cities)
-- **Shared** = Código reutilizável entre módulos
-- **Pages** = Composição de módulos em rotas
-
-### 3. Importações Limpas
-Use os barrel exports para importar:
-```typescript
-// ✅ Bom
-import { listAllCountry, type Country } from '@/modules/countries';
-
-// ❌ Evitar
-import { listAllCountry } from '@/modules/countries/services/country';
-```
-
-## Relacionamento dos Módulos
-
-```
-Continents (1)
-    ↓
-Countries (N) ← RestCountries API
-    ↓
-Cities (N)
-```
-
-## Próximos Passos
-1. ✅ Estrutura modular criada
-2. ⏳ Criar hooks customizados
-3. ⏳ Criar componentes com Tailwind
-4. ⏳ Configurar rotas (React Router)
-5. ⏳ Criar páginas
