@@ -11,15 +11,6 @@ API REST para gerenciamento de dados geográficos com integração à REST Count
 - **Seeds implementados:** Scripts de seed para popular o banco de dados em ambiente de desenvolvimento, incluindo usuários, países, cidades e continentes.
 - **Validação e DTOs:** Uso de DTOs para validação e transferência de dados entre camadas.
 
-## Tecnologias
-
-- **NestJS** - Framework Node.js progressivo
-
-- **Prisma ORM** - Type-safe database client
-
-- **PostgreSQL** - Banco de dados relacional
-
-- **TypeScript** - Superset JavaScript com tipagem estática
 
 ## Estrutura do Projeto
 

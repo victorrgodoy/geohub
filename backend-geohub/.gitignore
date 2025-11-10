@@ -1,5 +1,6 @@
 #prisma
 generated
+.prettierrc
 
 # compiled output
 /dist

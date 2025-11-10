@@ -20,7 +20,7 @@
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "seed:continent": "ts-node -r tsconfig-paths/register src/seeds/seed-continent.ts",
     "seed:country": "ts-node -r tsconfig-paths/register src/seeds/seed-country.ts",
-    "seed:city": "ts-node -r tsconfig-paths/register src/seeds/seed-city-manual.ts"
+    "seed:city": "ts-node -r tsconfig-paths/register src/seeds/seed-city.ts"
   },
   "dependencies": {
     "@nestjs/common": "^11.0.1",

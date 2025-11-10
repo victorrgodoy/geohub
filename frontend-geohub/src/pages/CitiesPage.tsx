@@ -30,7 +30,7 @@ export default function CitiesPage() {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedCity, setSelectedCity] = useState<City | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 9;
 
     const continentId = selectedContinentFilter ? Number(selectedContinentFilter) : undefined;
     const countryId = selectedCountryFilter ? Number(selectedCountryFilter) : undefined;

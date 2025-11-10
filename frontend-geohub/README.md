@@ -2,16 +2,6 @@
 
 Interface web para gerenciamento de dados geográficos (continentes, países e cidades) construída com React, Vite, TypeScript e TailwindCSS.
 
-### Tecnologias Principais
-
-- **React 18** — Biblioteca para construção de interfaces
-- **TypeScript** — Superset JavaScript com tipagem estática
-- **Vite** — Build tool rápido e moderno
-- **TanStack Query v5** — Gerenciamento de estado assíncrono
-- **React Router DOM** — Navegação e roteamento
-- **TailwindCSS** — Framework CSS utilitário
-- **Axios** — Cliente HTTP
-
 ## Instalação
 
 ### 1. Pré-requisitos

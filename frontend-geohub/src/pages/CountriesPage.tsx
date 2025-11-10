@@ -30,7 +30,7 @@ export default function CountriesPage() {
     const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
     const [selectedCountry, setSelectedCountry] = useState<Country | null>(null);
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const itemsPerPage = 9;
 
     const continentId = selectedContinentFilter ? Number(selectedContinentFilter) : undefined;
     const { data: countries, isLoading } = useListPaginatedCountries(
