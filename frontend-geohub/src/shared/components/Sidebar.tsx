@@ -2,7 +2,6 @@ import { NavLink } from "react-router-dom";
 import { Globe, Menu, Home, Flag, Building2 } from "lucide-react";
 import { useTheme } from "../contexts";
 import { useState, useEffect } from "react";
-import logo from '../../../public/logo.png';
 
 export default function Sidebar() {
     const { theme, toggleTheme } = useTheme();
@@ -40,7 +39,7 @@ export default function Sidebar() {
 
             <aside className={`w-64 bg-white h-screen dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col fixed top-0 left-0 z-40 transition-transform duration-500 ease-out lg:translate-x-0 ${isOpen ? 'translate-x-0' : '-translate-x-full'}`}>
                 <div className="h-16 flex items-center px-6 border-b border-gray-200 dark:border-gray-800 gap-2">
-                    <img src={logo} alt="GeoHub Logo" className="w-8 brightness-200"/>
+                    <img src="/logo.png" alt="GeoHub Logo" className="w-8 brightness-200"/>
                     <h1 className="text-xl font-semibold text-gray-900 dark:text-white">
                         GeoHub
                     </h1>

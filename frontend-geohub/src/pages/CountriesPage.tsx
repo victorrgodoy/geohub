@@ -14,6 +14,7 @@ import {
     type CreateCountry,
 } from "../modules/countries";
 import { formatNumber } from "../shared/utils";
+import { useCountriesFlags } from "../shared/hooks/useCountriesFlags";
 
 function ContinentName({ continentId }: { continentId: number }) {
     const { data: continents } = useListContinent();
@@ -24,6 +25,7 @@ function ContinentName({ continentId }: { continentId: number }) {
 } 
 
 export default function CountriesPage() {
+    const { data: countriesFlags } = useCountriesFlags();
     const [searchTerm, setSearchTerm] = useState("");
     const [selectedContinentFilter, setSelectedContinentFilter] = useState<string>("");
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -110,18 +112,32 @@ export default function CountriesPage() {
             key: "country",
             header: "Country",
             className: "w-64",
-            render: (country) => (
-                <div className="flex items-center gap-3">
-                    <div className="w-10 h-10 rounded-lg bg-green-50 dark:bg-green-950/30 text-green-600 dark:text-green-400 flex items-center justify-center shrink-0">
-                        <MapPin className="w-5 h-5" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                        <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
-                            {country.name}
+            render: (country) => {
+                const flag = countriesFlags?.find(
+                    (f) => f.name.common.toLowerCase() === country.name.toLowerCase()
+                );
+                return (
+                    <div className="flex items-center gap-3">
+                        {flag ? (
+                            <img
+                                src={flag.flags.svg || flag.flags.png}
+                                alt={`Flag of ${country.name}`}
+                                className="w-10 h-10 rounded object-cover"
+                                loading="lazy"
+                            />
+                        ) : (
+                            <div className="w-10 h-10 rounded-lg bg-green-50 dark:bg-green-950/30 text-green-600 dark:text-green-400 flex items-center justify-center shrink-0">
+                                <MapPin className="w-5 h-5" />
+                            </div>
+                        )}
+                        <div className="min-w-0 flex-1">
+                            <div className="text-sm font-medium text-gray-900 dark:text-white truncate">
+                                {country.name}
+                            </div>
                         </div>
                     </div>
-                </div>
-            ),
+                );
+            },
         },
     ];
 
