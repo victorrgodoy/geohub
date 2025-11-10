@@ -87,6 +87,7 @@ docker-compose up -d
 
 O `docker-compose.yml` do backend sobe um container PostgreSQL pronto para uso com as credenciais definidas no .env.
 
+Rodar migrate para configurar o banco de dados
 ```bash
 npx prisma migrate dev
 ```
