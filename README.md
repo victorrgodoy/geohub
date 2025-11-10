@@ -3,7 +3,7 @@
   <img src="assets/geohub_project.png" alt="Logo" />
 </p>
 
-<p align="center">
+<p align="start">
   <img src="https://img.shields.io/badge/NestJS-E0234E?style=for-the-badge&logo=nestjs&logoColor=white"/>
   <img src="https://img.shields.io/badge/Prisma-2D3748?style=for-the-badge&logo=prisma&logoColor=white"/>
   <img src="https://img.shields.io/badge/PostgreSQL-4169E1?style=for-the-badge&logo=postgresql&logoColor=white"/>
@@ -74,7 +74,18 @@ FRONTEND_URL=http://localhost:5173
 REST_COUNTRIES_API_URL=https://restcountries.com/v3.1
 ```
 
-Execute as migrations do Prisma:
+
+Opcional — usar Docker para o banco de dados
+
+> ⚠️ Antes de rodar o Docker, configure o arquivo `.env` corretamente com as variáveis do banco de dados.
+
+Se preferir usar Docker para rodar o PostgreSQL, entre na pasta `backend-geohub` e execute:
+
+```bash
+docker-compose up -d
+```
+
+O `docker-compose.yml` do backend sobe um container PostgreSQL pronto para uso com as credenciais definidas no .env.
 
 ```bash
 npx prisma migrate dev

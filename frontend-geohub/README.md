@@ -2,33 +2,61 @@
 
 Interface web para gerenciamento de dados geográficos (continentes, países e cidades) construída com React, Vite, TypeScript e TailwindCSS.
 
-## Instalação
 
-### 1. Pré-requisitos
-
-- Node.js 18+
-- npm ou yarn
-
-### 2. Instalar dependências
+### Estrutura do Projeto
 
 ```bash
-npm install
+front/
+├── public/
+│   └── logo.png
+├── src/
+│   ├── App.tsx                 # Configuração de rotas
+│   ├── main.tsx                # Ponto de entrada
+│   ├── index.css               # Estilos globais
+│   ├── modules/
+│   │   ├── cities/             # Módulo de cidades
+│   │   │   ├── components/
+│   │   │   ├── hooks/
+│   │   │   ├── services/
+│   │   │   └── types/
+│   │   ├── continents/         # Módulo de continentes
+│   │   ├── countries/          # Módulo de países
+│   │   ├── overview/           # Módulo de dashboard
+│   │   │   └── components/
+│   │   │       ├── StatCard.tsx
+│   │   │       └── GlobalInsightsCard.tsx
+│   │   └── worldbank/          # Integração World Bank API
+│   │       ├── hooks/
+│   │       ├── services/
+│   │       └── types/
+│   ├── pages/
+│   │   ├── OverviewPage.tsx    # Dashboard principal
+│   │   ├── ContinentsPage.tsx  # CRUD de continentes
+│   │   ├── CountriesPage.tsx   # CRUD de países
+│   │   └── CitiesPage.tsx      # CRUD de cidades
+│   ├── shared/
+│   │   ├── components/         # Componentes reutilizáveis
+│   │   │   ├── DataTable.tsx
+│   │   │   ├── Pagination.tsx
+│   │   │   ├── Select.tsx
+│   │   │   ├── SearchInput.tsx
+│   │   │   ├── ConfirmationModal.tsx
+│   │   │   ├── DataSourceInfo.tsx
+│   │   │   ├── Header.tsx
+│   │   │   └── Sidebar.tsx
+│   │   ├── contexts/           # Contextos globais
+│   │   ├── layouts/            # Layouts da aplicação
+│   │   │   └── MainLayout.tsx
+│   │   ├── services/           # Serviços da aplicação
+│   │   │   └── api.ts          # Configuração Axios
+│   │   └── utils/              # Funções utilitárias
+│   │       ├── formatNumber.ts
+│   │       └── formatDate.ts
+│   ├── tailwind.config.js
+│   ├── vite.config.ts
+│   └── tsconfig.json
 ```
 
-### 3. Configurar variáveis de ambiente
-
-Crie um arquivo `.env` na raiz do projeto:
-
-```env
-VITE_BACKEND_API_URL=<localhost_backend>
-VITE_WORLD_BANK_API_URL=https://api.worldbank.org/v2
-```
-
-### 4. Iniciar servidor de desenvolvimento
-
-```bash
-npm run dev
-```
 ## Funcionalidades
 
 ### Dashboard (Overview)

@@ -1,6 +1,8 @@
 # GeoHub Backend
 
-<a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
+<div  align="center">
+    <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg"  width="80" alt="Nest Logo" /></a> 
+</div>
 
 API REST para gerenciamento de dados geográficos com integração à REST Countries API.</p>
 
