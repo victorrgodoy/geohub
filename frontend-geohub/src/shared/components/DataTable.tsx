@@ -94,7 +94,7 @@ export default function DataTable<T extends { id: number | string }>({
                         </tr>
                     </thead>
                     <tbody className="divide-y divide-gray-200 dark:divide-gray-700">
-                        {data.map((item) => (
+                        {Array.isArray(data) && data.map((item) => (
                             <tr
                                 key={item.id}
                                 className="hover:bg-gray-50 dark:hover:bg-gray-800/50 transition-colors"

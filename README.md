@@ -1,6 +1,6 @@
 # GeoHub
 <p align="center">
-  <img src="assets/geohub_project.png" alt="Logo" />
+  <img src="assets/geohub_project.png" alt="Project 1" />
 </p>
 
 <p align="start">
@@ -15,9 +15,11 @@
 
 **GeoHub** é uma aplicação full-stack para gerenciamento de dados geográficos, integrando APIs externas para enriquecer informações de países, continentes e cidades com dados econômicos e estatísticos globais.
 
+<p align="center">
+  <img src="assets/geohub_project_2.png" alt="Project 2" />
+</p>
 
 ## Funcionalidades
-
  - Visão geral dos dados registrados
  - CRUD completo de Continentes, Países e Cidades
  - Integração com REST Countries API (moedas, idiomas, população, bandeiras)
@@ -43,9 +45,9 @@ geohub/
 ```
 
 ## Pré-requisitos
-- **Node.js** 18+ e npm/yarn
-- **PostgreSQL** 14+
-- **Git**
+- **Node.js** 18+ e npm/yarn — [nodejs.org](https://nodejs.org/)
+- **PostgreSQL** 14+ — [postgresql.org](https://www.postgresql.org/)
+- **Git** — [git-scm.com](https://git-scm.com/)
 
 ##  Instalação e Configuração
 
@@ -63,6 +65,7 @@ cd backend-geohub
 npm install
 ```
 
+#### Configuração do Banco de Dados
 Crie o arquivo `.env` baseado no `.env.example`:
 
 ```env
@@ -74,12 +77,14 @@ FRONTEND_URL=http://localhost:5173
 REST_COUNTRIES_API_URL=https://restcountries.com/v3.1
 ```
 
+#### Opção 1 - Banco de Dados Local
+```bash
+create database geohub
+```
 
-Opcional — usar Docker para o banco de dados
+#### Opção 2 — Docker para o Banco de Dados
 
-> ⚠️ Antes de rodar o Docker, configure o arquivo `.env` corretamente com as variáveis do banco de dados.
-
-Se preferir usar Docker para rodar o PostgreSQL, entre na pasta `backend-geohub` e execute:
+> Antes de rodar o Docker, configure o arquivo `.env` corretamente com as variáveis do banco de dados.
 
 ```bash
 docker-compose up -d
@@ -111,7 +116,7 @@ O backend estará rodando em `http://localhost:3000`
 ### 3. Configure o Frontend
 
 ```bash
-cd ../frontend-geohub
+cd frontend-geohub
 npm install
 ```
 
