@@ -1,0 +1,40 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: geohub_database
+    environment:
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_DB: ${DATABASE_NAME}
+    ports:
+      - '5432:5432'
+    volumes:
+      - geohub_data:/var/lib/postgresql
+    
+  backend:
+    build: ./backend-geohub
+    container_name: geohub_backend
+    environment:
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_URL: postgresql://${DATABASE_USER}:${DATABASE_PASSWORD}@db:5432/${DATABASE_NAME}?schema=public
+      FRONTEND_URL: ${FRONTEND_URL}
+      REST_COUNTRIES_API_URL: ${REST_COUNTRIES_API_URL}
+    ports:
+      - '3000:3000'
+
+  frontend:
+    build:
+      context: ./frontend-geohub
+      args:
+        VITE_BACKEND_API_URL: ${VITE_BACKEND_API_URL}
+        VITE_WORLD_BANK_API_URL: ${VITE_WORLD_BANK_API_URL}
+    container_name: geohub_frontend
+    ports:
+      - '80:80'
+    depends_on:
+      - backend
+
+volumes:
+  geohub_data:
