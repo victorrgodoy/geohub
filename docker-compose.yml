@@ -10,10 +10,18 @@ services:
       - '5432:5432'
     volumes:
       - geohub_data:/var/lib/postgresql
-    
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${DATABASE_USER} -d ${DATABASE_NAME}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
   backend:
     build: ./backend-geohub
     container_name: geohub_backend
+    depends_on:
+      db:
+        condition: service_healthy
     environment:
       DATABASE_USER: ${DATABASE_USER}
       DATABASE_PASSWORD: ${DATABASE_PASSWORD}
